@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/kodiplugin/kodiplugin.iml" filepath="$PROJECT_DIR$/kodiplugin/kodiplugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ultraviolet-kodiplugin/ultraviolet-kodiplugin.iml" filepath="$PROJECT_DIR$/ultraviolet-kodiplugin/ultraviolet-kodiplugin.iml" />
     </modules>
   </component>
 </project>
