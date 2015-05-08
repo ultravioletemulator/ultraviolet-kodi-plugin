@@ -58,6 +58,25 @@ def __init__ (self):
         return resGames
 
 
+
+
+    def getPlatformGames (self, platformId):
+
+        #http://thegamesdb.net/platform/sinclair-zx-spectrum/
+
+        c = httplib.HTTPConnection (self.apiUrl,80);
+        gameListXml= c.request('GET', "/GetPlatformGames?&platform="+platformId)
+        root = ET.parse (gameListXml)
+        games=root.findall ("/Data/Game")
+        resGames= []
+        for game in games:
+            metadata = self.importMetadata(game)
+            resGames.extend(game)
+        return resGames;
+
+
+
+
     def downloadArt (self,id):
         return None
 

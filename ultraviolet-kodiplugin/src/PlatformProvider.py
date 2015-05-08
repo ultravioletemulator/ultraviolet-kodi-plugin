@@ -1,5 +1,12 @@
 
+
+
 class PlatformProvider(Interface):
+
+
+
+    def getName (self):
+        return None
 
     def searchRom (query):
         return ['1','2','3']
@@ -14,8 +21,6 @@ class PlatformProvider(Interface):
         return 1
 
 
-
-
     def downloadArt (name):
         return "art"
 
@@ -24,5 +29,6 @@ class PlatformProvider(Interface):
 
     def downloadSummary(self,name):
         return "summary"
+
 
 
