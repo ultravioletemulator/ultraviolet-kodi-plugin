@@ -8,3 +8,7 @@ class Game:
     gameUrl = "https://duckduckgo.com/"
 
 
+
+class searchResult:
+    id=0
+    title=""

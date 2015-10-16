@@ -6,38 +6,43 @@ __author__ = 'developer'
 name = "rescate atlantida"
 
 import PlatformProviderSpectrum
+import MetadataProviderTgdb
 import os
 
 # from pps import PlatformProviderSpectrum
 
 #provider = platform.PlatformProviderSpectrum()
 provider = PlatformProviderSpectrum.PlatformProviderSpectrum()
+metadataProvider = MetadataProviderTgdb.MetadataProviderTgdb()
 
 print(provider)
 print("***********************")
 print(provider.id)
 print(provider.name)
 print("***********************")
-print("Searching for %s..." % name)
 
+queryString = input("Enter the game name you want to search for:")
+print("Searching for %s..." % queryString)
+selectedGame= provider.searchRom(queryString)
 
 # romList = provider.sRom(name)
 
-summary = provider.downloadSummary(name)
+summary = provider.downloadSummary(selectedGame)
 print(summary)
 
-gameList = provider.searchRom(name)
 
-print("Search results:")
-# PrintRoms
-i=0
-for game in gameList :
-    print("(%d) %s." % (i, game.name))
-    i+=1
+# gameList = provider.searchRom(name)
 
-option = input("Please enter the option of the game you want to play...")
-
-selectedGame = gameList[int(option)]
+# print("Search results:")
+# # PrintRoms
+# i=0
+# for game in gameList :
+#     print("(%d) %s." % (i, game.name))
+#     i+=1
+#
+# option = input("Please enter the option of the game you want to play...")
+#
+# selectedGame = gameList[int(option)]
 
 gameFile = provider.downloadRom(selectedGame)
 

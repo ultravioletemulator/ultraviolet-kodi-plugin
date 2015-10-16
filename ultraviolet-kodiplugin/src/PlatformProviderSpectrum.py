@@ -3,7 +3,8 @@ import urllib3
 import shutil
 import os
 import zipfile
-
+# import MetadataProviderTgdb
+import MetadataProviderWorldOfSpectrum
 class PlatformProviderSpectrum:
     id = 1
     name = "Zx Spectrum"
@@ -17,35 +18,48 @@ class PlatformProviderSpectrum:
         return 'hello world'
 
 
-    def searchRom (self, query):
-        print("%s searching for rom: %s" % (self.name,query))
-        list = []
-        game = dataStructures.Game()
-        game.name = "rescate atlantida"
-        game.fileUrl = "http://www.worldofspectrum.org/pub/sinclair/games/r/RescateAtlantida.tzx.zip"
-        list.append(game)
+    def searchRom (self, queryString):
 
-        game2 = dataStructures.Game()
-        game2.name= "Emilio butragueño"
-        game2.fileUrl="http://www.worldofspectrum.org/pub/sinclair/games/e/EmilioButraguenoFutbol.tzx.zip"
-        list.append(game2)
-        return list
+        # metadataProvider = MetadataProviderTgdb.MetadataProviderTgdb()
+        metadataProvider = MetadataProviderWorldOfSpectrum.MetadataProviderWorldOfSpectrum()
+
+        games = metadataProvider.searchGame(MetadataProviderWorldOfSpectrum.MetadataProviderWorldOfSpectrum.SPECTRUM_ID, queryString)
+        resGameList = []
+        i=0
+        for game in games:
+            gameId = game.id
+            gameTitle = game.name
+            print("(%s) %s" % (i, gameTitle))
+            resGame = dataStructures.Game()
+            resGame.name = gameTitle
+            resGame.id = gameId
+            resGame.url = ""
+            resGameList.append(resGame)
+            i +=1
+
+        selectedGameIdx = input("Please enter the id of the game you want to play.")
+        selectedGame = resGameList[int(selectedGameIdx)]
+        return selectedGame
 
 
-# def sRom (query):
+    # def sRom (query):
 #     print(" searching for rom: %s" % (query))
 #     return ['1', '2', '3']
 
 
     def downloadRom (self, game):
-        print("Downloading game %s..." % game.name)
+        print("Downloading game %s from url %s ..." % (game.name, game.fileUrl))
+
         c = urllib3.PoolManager()
         tmpFileName= "tmp.file"
-        # shutil.rmtree(tmpFileName)
-        with c.request('GET',game.fileUrl, preload_content=False) as resp, open(tmpFileName, 'wb') as out_file:
+        try:
+            shutil.rmtree(tmpFileName)
+        except:
+            print("Could not delete temp file "+tmpFileName)
+        with c.request('GET', game.fileUrl, preload_content=False) as resp, open(tmpFileName, 'wb') as out_file:
             shutil.copyfileobj(resp, out_file)
-
         resp.release_conn()
+
         print("Done downloading.")
         print ("Unzipping file %s " % tmpFileName)
 
@@ -63,7 +77,7 @@ class PlatformProviderSpectrum:
         newName = file.replace(".zip","")
         z = zipfile.ZipFile(fh)
         for name in z.namelist():
-            outpath = prefix
+            outpath = prefix + newName
             z.extract(name, outpath)
         fh.close()
 
@@ -119,8 +133,8 @@ class PlatformProviderSpectrum:
         return "cover"
 
 
-    def downloadSummary (self, name):
-        print("%s downloading summary for %s" % (self.name, name))
+    def downloadSummary (self, game):
+        print("Downloading summary for %s..." % (game.name))
         return "summary"
 
     def closeRom (self, game):
