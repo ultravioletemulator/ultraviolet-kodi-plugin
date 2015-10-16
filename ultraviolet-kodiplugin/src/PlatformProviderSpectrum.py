@@ -40,7 +40,7 @@ class PlatformProviderSpectrum:
     def downloadRom (self, game):
         print("Downloading game %s..." % game.name)
         c = urllib3.PoolManager()
-        tmpFileName= "./tmp.file"
+        tmpFileName= "tmp.file"
         # shutil.rmtree(tmpFileName)
         with c.request('GET',game.fileUrl, preload_content=False) as resp, open(tmpFileName, 'wb') as out_file:
             shutil.copyfileobj(resp, out_file)
@@ -49,7 +49,7 @@ class PlatformProviderSpectrum:
         print("Done downloading.")
         print ("Unzipping file %s " % tmpFileName)
 
-        self.unzipFile ("./tmp/", tmpFileName)
+        self.unzipFile ("./tmp/"+game.name, tmpFileName)
 
         # fh = open(tmpFileName, 'rb')
         # z = zipfile.ZipFile(fh)
@@ -63,7 +63,7 @@ class PlatformProviderSpectrum:
         newName = file.replace(".zip","")
         z = zipfile.ZipFile(fh)
         for name in z.namelist():
-            outpath = prefix+newName
+            outpath = prefix
             z.extract(name, outpath)
         fh.close()
 
@@ -87,20 +87,25 @@ class PlatformProviderSpectrum:
 
     def playRom (self, model, bios, name):
         print("Playing rom: %s" % name)
+        print("Model %s bios %s" % (model, bios))
+
+        try:
+            shutil.rmtree("./tmpbios")
+        except:
+            print("")
 
         if (bios.endswith(".zip")):
             nameClean=bios.replace(".zip", "")
-            print(nameClean)
             self.unzipFile("./tmpbios/", "bios/"+model+"/"+bios)
 
         # os.system("fuse-sdl "+name+" --rom-128 bios/"+bios)
         bioses = os.listdir("tmpbios/")
         biosStr=""
         for bios in bioses:
-            biosStr += bios
+            biosStr += "./tmpbios/"+bios+" "
 
-        # os.system("fuse-sdl "+name+" --rom-speccyboot "+biosStr)
-        command = "fuse-sdl -tap "+name+" --rom-48 bios/48/48.rom"
+        command = "fuse-sdl "+name+" --rom-speccyboot "+biosStr
+        # command = "fuse-sdl "+name+" --rom-"+model+" "+biosStr
         print(command)
         os.system(command)
         return 1
