@@ -3,16 +3,17 @@ __author__ = 'developer'
 class MetadataProviderTgdb:
     id=1
     name ="The Games DB"
+    url = "http://thegamesdb.net/"
 
 def __init__ (self):
     print ("initiating metadata provider"+self.name)
 
 
-    def downloadArt (name):
+    def getArt (self, name):
         return "art"
 
-    def downloadCover(name):
+    def getCover(self, name):
         return "cover"
 
-    def downloadSummary():
+    def getSummary(self, name):
         return "summary"
