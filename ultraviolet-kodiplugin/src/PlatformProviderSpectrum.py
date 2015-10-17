@@ -133,11 +133,28 @@ class PlatformProviderSpectrum:
             biosStr += "./tmpbios/"+bios+" "
 
         # command = "fuse-sdl "+name+" --rom-speccyboot "+biosStr
-        command = "fuse-sdl "+name+" --speed 100 --full-screen --graphics-filter hq3x  -j /dev/input/js1  --rom-"+model+" "+biosStr
+        #command = "fuse-sdl "+name+" --speed 100 --full-screen --graphics-filter hq3x  -j  --rom-"+model+" "+biosStr
+        biosCommand= self.getBiosCommand(model, bios)
+        command = "fuse-sdl "+name+ biosCommand+" --fastload  --speed 100 --full-screen --graphics-filter hq3x  -j "
         print(command)
         os.system(command)
         return 1
 
+    def getBiosCommand (self, model, bios):
+        biosName= bios.replace(".zip","")
+        biosName= bios.replace(".rom","")
+        biosName= biosName.replace("-0","")
+        biosName= biosName.replace("-1","")
+        res=""
+        if model =="48":
+            res= " --machine "+model+" --rom-"+model+" "+bios
+        elif model =="128":
+            res = " --machine "+model+" --rom-"+model+"-0 ./tmpbios/"+biosName+"-0.rom --rom-"+model+"-1 ./tmpbios/"+biosName+"-1.rom "
+        elif model=="plus2":
+            res = " --machine "+model+" --rom-"+model+"-0 ./tmpbios/"+biosName+"-0.rom --rom-"+model+"-1 ./tmpbios/"+biosName+"-1.rom "
+        elif model=="plus3":
+            res = " --machine "+model+" --rom-"+model+"-0 ./tmpbios/"+biosName+"-0.rom --rom-"+model+"-1 ./tmpbios/"+biosName+"-1.rom  --rom-"+model+"-2 ./tmpbios/"+biosName+"-2.rom --rom-"+model+"-3 ./tmpbios/"+biosName+"-3.rom "
+        return res
 
     def downloadArt (self, name):
         return "art"

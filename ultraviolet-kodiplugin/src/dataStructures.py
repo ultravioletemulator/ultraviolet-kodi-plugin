@@ -6,8 +6,12 @@ class Game:
     name = "Game"
     fileUrl = "http://google.com"
     gameUrl = "https://duckduckgo.com/"
+    files=[]
 
 
+class File:
+    fileName=""
+    url=""
 
 class searchResult:
     id=0

@@ -8,7 +8,8 @@ name = "rescate atlantida"
 import PlatformProviderSpectrum
 import MetadataProviderTgdb
 import os
-
+import apputils
+import shutil
 # from pps import PlatformProviderSpectrum
 
 #provider = platform.PlatformProviderSpectrum()
@@ -92,7 +93,7 @@ biosOpt = input("Select bios:")
 selectedBios = bioses[int(biosOpt)]
 
 
-provider.playRom(selectedModel.replace(" ", "\\ ") ,selectedBios.replace(" ", "\\ ") ,fullRomName.replace(" ", "\\ "))
+provider.playRom(apputils.cleanString(selectedModel) ,apputils.cleanString(selectedBios) ,apputils.cleanString(fullRomName))
 
 # artFile = provider.downloadArt(selectedGame)
 #
@@ -102,6 +103,8 @@ provider.playRom(selectedModel.replace(" ", "\\ ") ,selectedBios.replace(" ", "\
 
 
 # provider.closeRom(selectedGame)
+
+shutil.rmtree("tmp.file")
 
 
 
