@@ -90,6 +90,7 @@ class MetadataProviderWorldOfSpectrum:
 
         zipSelected = input("Select game file")
         urlGameZip = gameUrls[int(zipSelected)]
+        print ("GameUrl: "+urlGameZip)
 
 
         result = dataStructures.Game()

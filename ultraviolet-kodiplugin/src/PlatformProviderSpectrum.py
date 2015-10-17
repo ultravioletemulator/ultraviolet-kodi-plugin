@@ -33,7 +33,8 @@ class PlatformProviderSpectrum:
             resGame = dataStructures.Game()
             resGame.name = gameTitle
             resGame.id = gameId
-            resGame.url = ""
+            resGame.url = game.fileUrl
+            resGame.fileUrl= game.fileUrl
             resGameList.append(resGame)
             i +=1
 
@@ -45,6 +46,13 @@ class PlatformProviderSpectrum:
     # def sRom (query):
 #     print(" searching for rom: %s" % (query))
 #     return ['1', '2', '3']
+
+    def saveFile (self, source, dest):
+        import os.path
+        dirName = "download";
+        if (not os.path.exists(dirName)):
+            os.mkdir(dirName)
+        shutil.copy(source, dirName+"/"+dest)
 
 
     def downloadRom (self, game):
@@ -61,6 +69,12 @@ class PlatformProviderSpectrum:
         resp.release_conn()
 
         print("Done downloading.")
+        print("Saving file...")
+        # index = game.fileUrl.rindex("/")
+        # name = game.fileUrl[index:game.fileUrl.length]
+        name = game.name
+        self.saveFile(tmpFileName,name)
+        print ("Done saving")
         print ("Unzipping file %s " % tmpFileName)
 
         self.unzipFile ("./tmp/"+game.name, tmpFileName)
@@ -77,7 +91,7 @@ class PlatformProviderSpectrum:
         newName = file.replace(".zip","")
         z = zipfile.ZipFile(fh)
         for name in z.namelist():
-            outpath = prefix + newName
+            outpath = prefix
             z.extract(name, outpath)
         fh.close()
 
@@ -118,8 +132,8 @@ class PlatformProviderSpectrum:
         for bios in bioses:
             biosStr += "./tmpbios/"+bios+" "
 
-        command = "fuse-sdl "+name+" --rom-speccyboot "+biosStr
-        # command = "fuse-sdl "+name+" --rom-"+model+" "+biosStr
+        # command = "fuse-sdl "+name+" --rom-speccyboot "+biosStr
+        command = "fuse-sdl "+name+" --speed 100 --full-screen --graphics-filter hq3x  -j /dev/input/js1  --rom-"+model+" "+biosStr
         print(command)
         os.system(command)
         return 1
