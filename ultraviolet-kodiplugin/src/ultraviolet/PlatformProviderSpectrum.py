@@ -74,7 +74,7 @@ class PlatformProviderSpectrum:
         # index = game.fileUrl.rindex("/")
         # name = game.fileUrl[index:game.fileUrl.length]
         name = game.name
-        self.saveFile(tmpFileName,name, conf)
+        self.saveFile(tmpFileName,name)
         print ("Done saving")
         print ("Unzipping file %s " % tmpFileName)
 
