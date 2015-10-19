@@ -13,15 +13,100 @@ import os
 import ultraviolet.apputils
 import shutil
 # from pps import PlatformProviderSpectrum
-
+from json import JSONEncoder
+from json import JSONDecoder
 
 class gameRunner:
 
     BIOSFOLDER="ultraviolet/bios/"
+    APP_HOME="/ultraviolet/"
+    CONF_FOLDER="configuration/"
+    CONF_FILE="configuration.pickle"
+
+
+    def createFolderStructure(self):
+        foldername= os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME
+        if (not os.path.exists(foldername)):
+            os.mkdir(foldername)
+
+        confFolder= os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.CONF_FOLDER
+        print ("Creating folder :"+confFolder)
+        if (not os.path.exists(confFolder)):
+            os.mkdir(confFolder)
+
+
+    def configureEmulator (self):
+
+        print("Select Zx Spectrum configuration...")
+
+        conf=None
+        if (os.path.exists(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.CONF_FOLDER+ultraviolet.gameRunner.gameRunner. CONF_FILE)):
+            print ("if")
+            # import json
+            # from pprint import pprint
+            # with open(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+self.CONF_FOLDER+'configuration.json') as data_file:
+            #     conf = json.load(data_file)
+            # pprint(conf)
+
+            print("laoding pickle...")
+            import pickle
+            with open(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.CONF_FOLDER+ultraviolet.gameRunner.gameRunner. CONF_FILE, 'rb') as f:
+                conf= pickle.load(f)
+
+        else:
+            print("Select model.")
+            # print (os.path("."))
+            print(os.path.dirname(os.path.realpath(".")))
+            models =os.listdir(self.BIOSFOLDER)
+            i=0
+            for model in models:
+                print("(%d) model %s..." % (i, model))
+                i +=1
+
+            modelOpt = input("Select model:")
+
+            selectedModel = models[int(modelOpt)]
+
+            print("Select available bios-es for the model %s " % selectedModel)
+
+            bioses =os.listdir(self.BIOSFOLDER+selectedModel)
+            i=0
+            for bios in bioses:
+                print("(%d) bios %s..." % (i, bios))
+                i +=1
+
+            biosOpt = input("Select bios:")
+
+            selectedBios = bioses[int(biosOpt)]
+
+            conf =ultraviolet.dataStructures.configuration()
+            conf.model= selectedModel
+            conf.bios= selectedBios
+
+            # jsonConf= JSONEncoder.encode(conf)
+            # import json
+            # with open(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.CONF_FOLDER+ultraviolet.gameRunner.gameRunner. CONF_FILE, 'w+') as outfile:
+                # json.dump(jsonConf, outfile)
+                # json.dumps(conf, default=lambda o: o.__dict__,
+                #               sort_keys=True, indent=4)
+            # with open(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.CONF_FOLDER+ultraviolet.gameRunner.gameRunner. CONF_FILE, "w+") as outfile:
+            #     # json.dump(conf, outfile, indent=2)
+            #     json.dump(conf, cls=CustomEncoder)
+
+            print("Writing pickle...")
+            import pickle
+            with open(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.CONF_FOLDER+ultraviolet.gameRunner.gameRunner. CONF_FILE, 'bw+') as f:
+                pickle.dump(conf, f)
+
+        print("Model: %s bios: %s " % (conf.model, conf.bios))
+        return conf
+
 
 
     def runGame (self):
 
+        self.createFolderStructure()
+        conf = self.configureEmulator();
         #provider = platform.PlatformProviderSpectrum()
         provider = ultraviolet.PlatformProviderSpectrum.PlatformProviderSpectrum()
 
@@ -74,38 +159,40 @@ class gameRunner:
         print("Selected rom: %s" % option)
         rom = romList[int(option)]
         print("Runnign rom: %s" % rom)
-        fullRomName = "./tmp/"+selectedGame.name+"/"+rom
+        fullRomName = os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmp/"+selectedGame.name+"/"+rom
 
 
 
         print("Select Zx Spectrum configuration...")
-        print("Select model.")
-        # print (os.path("."))
-        print(os.path.dirname(os.path.realpath(".")))
-        models =os.listdir(self.BIOSFOLDER)
-        i=0
-        for model in models:
-            print("(%d) model %s..." % (i, model))
-            i +=1
+        # print("Select model.")
+        # # print (os.path("."))
+        # print(os.path.dirname(os.path.realpath(".")))
+        # models =os.listdir(self.BIOSFOLDER)
+        # i=0
+        # for model in models:
+        #     print("(%d) model %s..." % (i, model))
+        #     i +=1
+        #
+        # modelOpt = input("Select model:")
+        #
+        # selectedModel = models[int(modelOpt)]
+        #
+        #
+        #
+        # print("Select available bios-es for the model %s " % selectedModel)
+        #
+        # bioses =os.listdir(self.BIOSFOLDER+selectedModel)
+        # i=0
+        # for bios in bioses:
+        #     print("(%d) bios %s..." % (i, bios))
+        #     i +=1
+        #
+        # biosOpt = input("Select bios:")
+        #
+        # selectedBios = bioses[int(biosOpt)]
 
-        modelOpt = input("Select model:")
-
-        selectedModel = models[int(modelOpt)]
-
-
-
-        print("Select available bios-es for the model %s " % selectedModel)
-
-        bioses =os.listdir(self.BIOSFOLDER+selectedModel)
-        i=0
-        for bios in bioses:
-            print("(%d) bios %s..." % (i, bios))
-            i +=1
-
-        biosOpt = input("Select bios:")
-
-        selectedBios = bioses[int(biosOpt)]
-
+        selectedModel=conf.model
+        selectedBios=conf.bios
 
         provider.playRom(ultraviolet.apputils.cleanString(selectedModel) ,ultraviolet.apputils.cleanString(selectedBios) ,ultraviolet.apputils.cleanString(fullRomName))
 
@@ -119,7 +206,6 @@ class gameRunner:
         # provider.closeRom(selectedGame)
 
         shutil.rmtree("tmp.file")
-
 
 
 

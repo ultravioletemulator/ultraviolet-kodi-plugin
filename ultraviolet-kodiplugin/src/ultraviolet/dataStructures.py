@@ -16,3 +16,8 @@ class File:
 class searchResult:
     id=0
     title=""
+
+
+class configuration:
+    model="48"
+    bios="48.zip"

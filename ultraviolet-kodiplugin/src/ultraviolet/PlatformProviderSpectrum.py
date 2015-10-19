@@ -49,7 +49,7 @@ class PlatformProviderSpectrum:
 
     def saveFile (self, source, dest):
         import os.path
-        dirName = "download";
+        dirName = os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"download";
         if (not os.path.exists(dirName)):
             os.mkdir(dirName)
         shutil.copy(source, dirName+"/"+dest)
@@ -77,7 +77,7 @@ class PlatformProviderSpectrum:
         print ("Done saving")
         print ("Unzipping file %s " % tmpFileName)
 
-        self.unzipFile ("./tmp/"+game.name, tmpFileName)
+        self.unzipFile (os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmp/"+game.name, tmpFileName)
 
         # fh = open(tmpFileName, 'rb')
         # z = zipfile.ZipFile(fh)
@@ -118,19 +118,19 @@ class PlatformProviderSpectrum:
         print("Model %s bios %s" % (model, bios))
 
         try:
-            shutil.rmtree("./tmpbios")
+            shutil.rmtree(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmpbios")
         except:
             print("")
 
         if (bios.endswith(".zip")):
             nameClean=bios.replace(".zip", "")
-            self.unzipFile("./tmpbios/", ultraviolet.gameRunner.gameRunner.BIOSFOLDER +model+"/"+bios)
+            self.unzipFile(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmpbios/", ultraviolet.gameRunner.gameRunner.BIOSFOLDER +model+"/"+bios)
 
         # os.system("fuse-sdl "+name+" --rom-128 bios/"+bios)
-        bioses = os.listdir("tmpbios/")
+        bioses = os.listdir(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmpbios/")
         biosStr=""
         for bios in bioses:
-            biosStr += "./tmpbios/"+bios+" "
+            biosStr += os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmpbios/"+bios+" "
 
         # command = "fuse-sdl "+name+" --rom-speccyboot "+biosStr
         #command = "fuse-sdl "+name+" --speed 100 --full-screen --graphics-filter hq3x  -j  --rom-"+model+" "+biosStr
@@ -149,11 +149,11 @@ class PlatformProviderSpectrum:
         if model =="48":
             res= " --machine "+model+" --rom-"+model+" "+bios
         elif model =="128":
-            res = " --machine "+model+" --rom-"+model+"-0 ./tmpbios/"+biosName+"-0.rom --rom-"+model+"-1 ./tmpbios/"+biosName+"-1.rom "
+            res = " --machine "+model+" --rom-"+model+"-0 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmpbios/"+biosName+"-0.rom --rom-"+model+"-1 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmpbios/"+biosName+"-1.rom "
         elif model=="plus2":
-            res = " --machine "+model+" --rom-"+model+"-0 ./tmpbios/"+biosName+"-0.rom --rom-"+model+"-1 ./tmpbios/"+biosName+"-1.rom "
+            res = " --machine "+model+" --rom-"+model+"-0 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmpbios/"+biosName+"-0.rom --rom-"+model+"-1 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmpbios/"+biosName+"-1.rom "
         elif model=="plus3":
-            res = " --machine "+model+" --rom-"+model+"-0 ./tmpbios/"+biosName+"-0.rom --rom-"+model+"-1 ./tmpbios/"+biosName+"-1.rom  --rom-"+model+"-2 ./tmpbios/"+biosName+"-2.rom --rom-"+model+"-3 ./tmpbios/"+biosName+"-3.rom "
+            res = " --machine "+model+" --rom-"+model+"-0 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmpbios/"+biosName+"-0.rom --rom-"+model+"-1 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmpbios/"+biosName+"-1.rom  --rom-"+model+"-2 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmpbios/"+biosName+"-2.rom --rom-"+model+"-3 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmpbios/"+biosName+"-3.rom "
         return res
 
     def downloadArt (self, name):
@@ -174,7 +174,7 @@ class PlatformProviderSpectrum:
 
     def listZipRoms (self, game):
         from os import listdir
-        files = listdir("./tmp/"+game.name)
+        files = listdir(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmp/"+game.name)
         return files
 
 

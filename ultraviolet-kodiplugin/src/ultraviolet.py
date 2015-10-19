@@ -13,6 +13,6 @@ import ultraviolet.gameRunner
 
 print ("Running Ultraviolet ...")
 gameRunner = ultraviolet.gameRunner.gameRunner()
-gameRunner.runGame();
+gameRunner.runGame()
 
 
