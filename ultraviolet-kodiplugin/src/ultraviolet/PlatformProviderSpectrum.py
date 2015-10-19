@@ -59,7 +59,7 @@ class PlatformProviderSpectrum:
         print("Downloading game %s from url %s ..." % (game.name, game.fileUrl))
 
         c = urllib3.PoolManager()
-        tmpFileName= "tmp.file"
+        tmpFileName= os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmp.file"
         try:
             shutil.rmtree(tmpFileName)
         except:
