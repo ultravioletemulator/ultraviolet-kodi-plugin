@@ -8,7 +8,7 @@ import ultraviolet.MetadataProviderWorldOfSpectrum
 class PlatformProviderSpectrum:
     id = 1
     name = "Zx Spectrum"
-
+    conf=None
 
 # def __init__(self):
 #     print("initiating platform provider"+self.name)
@@ -49,10 +49,11 @@ class PlatformProviderSpectrum:
 
     def saveFile (self, source, dest):
         import os.path
-        dirName = os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"download";
+        dirName = os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"download"
         if (not os.path.exists(dirName)):
             os.mkdir(dirName)
-        shutil.copy(source, dirName+"/"+dest)
+            if (ultraviolet.gameRunner.conf.download):
+                shutil.copy(source, dirName+"/"+dest)
 
 
     def downloadRom (self, game):
@@ -73,7 +74,7 @@ class PlatformProviderSpectrum:
         # index = game.fileUrl.rindex("/")
         # name = game.fileUrl[index:game.fileUrl.length]
         name = game.name
-        self.saveFile(tmpFileName,name)
+        self.saveFile(tmpFileName,name, conf)
         print ("Done saving")
         print ("Unzipping file %s " % tmpFileName)
 
@@ -135,7 +136,7 @@ class PlatformProviderSpectrum:
         # command = "fuse-sdl "+name+" --rom-speccyboot "+biosStr
         #command = "fuse-sdl "+name+" --speed 100 --full-screen --graphics-filter hq3x  -j  --rom-"+model+" "+biosStr
         biosCommand= self.getBiosCommand(model, bios)
-        command = "fuse-sdl "+name+ biosCommand+" --fastload  --speed 100 --full-screen --graphics-filter hq3x  -j /dev/js0 "
+        command = ultraviolet.gameRunner.configuration.fuseCommand+" "+name+ biosCommand+" --fastload  --speed 100 --full-screen --graphics-filter hq3x  -j /dev/js0 "
         print(command)
         os.system(command)
         return 1

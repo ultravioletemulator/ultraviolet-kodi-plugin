@@ -6,7 +6,11 @@ class Game:
     name = "Game"
     fileUrl = "http://google.com"
     gameUrl = "https://duckduckgo.com/"
-    files=[]
+    files = []
+    summary = ""
+    covertUrl = ""
+    screenUrl = ""
+    pokesUrl = ""
 
 
 class File:
@@ -19,5 +23,9 @@ class searchResult:
 
 
 class configuration:
+    fuseCommand = "fuse-sdl"
     model="48"
     bios="48.zip"
+    download=True
+
+

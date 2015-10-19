@@ -12,9 +12,13 @@ import ultraviolet.PlatformProviderSpectrum
 import os
 import ultraviolet.apputils
 import shutil
+import ultraviolet.dataStructures
 # from pps import PlatformProviderSpectrum
 from json import JSONEncoder
 from json import JSONDecoder
+
+
+
 
 class gameRunner:
 
@@ -22,6 +26,12 @@ class gameRunner:
     APP_HOME="/ultraviolet/"
     CONF_FOLDER="configuration/"
     CONF_FILE="configuration.pickle"
+    DB_NAME="ultraviolet.db"
+
+
+
+    configuration=None
+
 
 
     def createFolderStructure(self):
@@ -54,6 +64,10 @@ class gameRunner:
                 conf= pickle.load(f)
 
         else:
+            conf =ultraviolet.dataStructures.configuration()
+            fuseCommand = input ("Configure your fuse program name:")
+            conf.fuseCommand= fuseCommand
+
             print("Select model.")
             # print (os.path("."))
             print(os.path.dirname(os.path.realpath(".")))
@@ -79,7 +93,7 @@ class gameRunner:
 
             selectedBios = bioses[int(biosOpt)]
 
-            conf =ultraviolet.dataStructures.configuration()
+
             conf.model= selectedModel
             conf.bios= selectedBios
 
@@ -93,6 +107,18 @@ class gameRunner:
             #     # json.dump(conf, outfile, indent=2)
             #     json.dump(conf, cls=CustomEncoder)
 
+            downloadOptList=[]
+            downloadOptList.append("True")
+            downloadOptList.append("False")
+
+            print("(0) True")
+            print("(1) False")
+
+            downloadOpt = ultraviolet.apputils.getInput("Keeo downloaded games", 2)
+
+            download = downloadOptList[downloadOpt]
+            conf.download= bool(download)
+
             print("Writing pickle...")
             import pickle
             with open(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.CONF_FOLDER+ultraviolet.gameRunner.gameRunner. CONF_FILE, 'bw+') as f:
@@ -105,7 +131,8 @@ class gameRunner:
     def runGame (self):
 
         self.createFolderStructure()
-        conf = self.configureEmulator();
+        conf = self.configureEmulator()
+        ultraviolet.gameRunner.gameRunner.configuration= conf
         #provider = platform.PlatformProviderSpectrum()
         provider = ultraviolet.PlatformProviderSpectrum.PlatformProviderSpectrum()
 
@@ -193,7 +220,7 @@ class gameRunner:
         selectedModel=conf.model
         selectedBios=conf.bios
 
-        provider.playRom(ultraviolet.apputils.cleanString(selectedModel) ,ultraviolet.apputils.cleanString(selectedBios) ,ultraviolet.apputils.cleanString(fullRomName))
+        provider.playRom(ultraviolet.apputils.cleanStringOs(selectedModel) ,ultraviolet.apputils.cleanStringOs(selectedBios) ,ultraviolet.apputils.cleanStringOs(fullRomName))
 
         # artFile = provider.downloadArt(selectedGame)
         #
