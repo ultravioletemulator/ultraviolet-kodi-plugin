@@ -3,7 +3,7 @@ __author__ = 'developer'
 import urllib3
 import shutil
 import xml.dom.minidom
-import dataStructures
+import ultraviolet.dataStructures
 import requests
 from lxml import html
 
@@ -94,7 +94,7 @@ class MetadataProviderWorldOfSpectrum:
         print ("GameUrl: "+urlGameZip)
 
 
-        result = dataStructures.Game()
+        result = ultraviolet.dataStructures.Game()
         result.name = gameTitles[int(zipSelected)]
         result.id = ""
         result.url = urlGameZip

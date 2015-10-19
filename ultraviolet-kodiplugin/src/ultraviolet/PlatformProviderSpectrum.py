@@ -1,10 +1,10 @@
-import dataStructures
+import ultraviolet.dataStructures
 import urllib3
 import shutil
 import os
 import zipfile
 # import MetadataProviderTgdb
-import MetadataProviderWorldOfSpectrum
+import ultraviolet.MetadataProviderWorldOfSpectrum
 class PlatformProviderSpectrum:
     id = 1
     name = "Zx Spectrum"
@@ -21,16 +21,16 @@ class PlatformProviderSpectrum:
     def searchRom (self, queryString):
 
         # metadataProvider = MetadataProviderTgdb.MetadataProviderTgdb()
-        metadataProvider = MetadataProviderWorldOfSpectrum.MetadataProviderWorldOfSpectrum()
+        metadataProvider = ultraviolet.MetadataProviderWorldOfSpectrum.MetadataProviderWorldOfSpectrum()
 
-        games = metadataProvider.searchGame(MetadataProviderWorldOfSpectrum.MetadataProviderWorldOfSpectrum.SPECTRUM_ID, queryString)
+        games = metadataProvider.searchGame(ultraviolet.MetadataProviderWorldOfSpectrum.MetadataProviderWorldOfSpectrum.SPECTRUM_ID, queryString)
         resGameList = []
         i=0
         for game in games:
             gameId = game.id
             gameTitle = game.name
             print("(%s) %s" % (i, gameTitle))
-            resGame = dataStructures.Game()
+            resGame = ultraviolet.dataStructures.Game()
             resGame.name = gameTitle
             resGame.id = gameId
             resGame.url = game.fileUrl
@@ -124,7 +124,7 @@ class PlatformProviderSpectrum:
 
         if (bios.endswith(".zip")):
             nameClean=bios.replace(".zip", "")
-            self.unzipFile("./tmpbios/", "bios/"+model+"/"+bios)
+            self.unzipFile("./tmpbios/", ultraviolet.gameRunner.gameRunner.BIOSFOLDER +model+"/"+bios)
 
         # os.system("fuse-sdl "+name+" --rom-128 bios/"+bios)
         bioses = os.listdir("tmpbios/")
