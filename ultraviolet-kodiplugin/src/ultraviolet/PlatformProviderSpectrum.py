@@ -136,7 +136,7 @@ class PlatformProviderSpectrum:
         # command = "fuse-sdl "+name+" --rom-speccyboot "+biosStr
         #command = "fuse-sdl "+name+" --speed 100 --full-screen --graphics-filter hq3x  -j  --rom-"+model+" "+biosStr
         biosCommand= self.getBiosCommand(model, bios)
-        command = ultraviolet.gameRunner.gameRunner.configuration.fuseCommand+" "+name+ biosCommand+" --fastload  --speed 100 --full-screen --graphics-filter hq3x  -j /dev/js0 "
+        command = ultraviolet.gameRunner.gameRunner.configuration.fuseCommand+" "+name+ biosCommand+" --fastload  --speed 100 --full-screen --graphics-filter hq3x  -j /dev/js0 --joystick-output 3 "
         print(command)
         os.system(command)
         return 1
