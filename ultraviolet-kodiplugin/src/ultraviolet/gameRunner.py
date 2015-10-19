@@ -115,7 +115,7 @@ class gameRunner:
             print("(1) False")
 
             downloadOpt = ultraviolet.apputils.getInput("Keeo downloaded games", 2)
-
+            print("opt: %s" % downloadOpt)
             download = downloadOptList[downloadOpt]
             conf.download= bool(download)
 
