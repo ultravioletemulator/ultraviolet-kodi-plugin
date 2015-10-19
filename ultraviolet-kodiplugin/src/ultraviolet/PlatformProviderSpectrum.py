@@ -38,7 +38,7 @@ class PlatformProviderSpectrum:
             resGameList.append(resGame)
             i +=1
 
-        selectedGameIdx = input("Please enter the id of the game you want to play.")
+        selectedGameIdx = ultraviolet.apputils.getInput ("Please enter the id of the game you want to play.",i)
         selectedGame = resGameList[int(selectedGameIdx)]
         return selectedGame
 

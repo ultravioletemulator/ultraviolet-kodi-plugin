@@ -106,6 +106,8 @@ class MetadataProviderWorldOfSpectrum:
 
     def indexGames (self):
         print("indexing games...")
+        self.createDbStructure()
+        self.cleanDb()
         index = ["a","b","c","d","e","f","g","h","i","j","k","l","n","m","ñ","o","p","q","r","s","t","u","v","w","x","y","z","0","1","2","3","4","5","6","7","8","9"]
         for letter in index:
             self.indexLetter(letter)
@@ -150,10 +152,9 @@ class MetadataProviderWorldOfSpectrum:
 
     def indexGame (self,  gameTitle, gameUrl):
         print("indexing game: %s" % gameTitle)
-        game = dataStructures.Game()
+        game = ultraviolet.dataStructures.Game()
         game.name= gameTitle
         game.gameUrl= gameUrl
-
 
         gameDescUrl = gameUrl
 
@@ -181,7 +182,7 @@ class MetadataProviderWorldOfSpectrum:
         resGameList = []
         i=0
         for zip in gameTitles:
-            result = dataStructures.File()
+            result = ultraviolet.dataStructures.File()
             result.fileName = gameTitles[i]
             result.url = gameUrls[i]
             print ("Adding %s file: %s" % (result.fileName, result.url))
@@ -192,9 +193,143 @@ class MetadataProviderWorldOfSpectrum:
         print("Indexed %d files for game %s" % (len(resGameList), game.name))
         self.persistGame (game)
 
+    def createDbStructure(self):
+        print("Creating db structure")
+
+        import sys
+        import sqlite3 as lite
+        try:
+            con = lite.connect('ultraviolet.db')
+
+            cur = con.cursor()
+            # cur.execute('SELECT SQLITE_VERSION()')
+            print("Creating db...")
+            cur.execute("SELECT name FROM sqlite_master WHERE  tbl_name='GAMES';")
+            # type='table' AND
+            gamesExists = cur.fetchone()
+            print("games len: %d ok:%r" % (len(gamesExists) , (not gamesExists == None and len(gamesExists)>0 and not gamesExists[0] == None)))
+
+            if (not gamesExists == None and len(gamesExists)==0): #  and not gamesExists[0] == None
+                print("Creating GAMES")
+                cur.execute(" CREATE TABLE GAMES ( id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, url VARCHAR )")
+
+
+            cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='GAMEFILES';")
+            gameFilesExists =cur.fetchone()
+            if (not gameFilesExists == None and len(gameFilesExists)==0): # and not gameFilesExists[0] == None
+                print("Creating GAMEFILES")
+                cur.execute(" CREATE TABLE GAMEFILES ( id INTEGER PRIMARY KEY  AUTOINCREMENT, gameId Integer, name VARCHAR, url VARCHAR )")
+
+            # data = cur.fetchone()
+            # print ("SQLite version: %s" % data)
+        except lite.Error as e :
+            print ("Error %s:" % e.args[0])
+            sys.exit(1)
+
+        finally:
+
+            if con:
+                con.commit()
+                con.close()
+
+    def cleanDb(self):
+        print("Cleaning db...")
+        import sys
+        import sqlite3 as lite
+        try:
+            con = lite.connect('ultraviolet.db')
+            cur = con.cursor()
+
+            cur.execute("DELETE FROM GAMES ")
+            cur.execute("DELETE FROM GAMEFILES ")
+
+            # data = cur.fetchone()
+            # print ("SQLite version: %s" % data)
+        except lite.Error as e :
+            print ("Error %s:" % e.args[0])
+            sys.exit(1)
+
+        finally:
+            if con:
+                con.commit()
+                con.close()
+
+
 
     def persistGame(self, game):
+
         print("Persisting game %s ..." % game.name)
+        gameId=-1
+        import sys
+        import sqlite3 as lite
+        try:
+            con = lite.connect('ultraviolet.db')
+
+            cur = con.cursor()
+            # cur.execute('SELECT SQLITE_VERSION()')
+            print("saving game: %s " % game.name)
+            cur.execute("INSERT INTO GAMES ('name') VALUES ('"+ultraviolet.apputils.cleanString (game.name)+"')")
+            gameId= cur.lastrowid
+            # data = cur.fetchone()
+            # print ("SQLite version: %s" % data)
+        except lite.Error as e :
+            print ("Error %s:" % e.args[0])
+            sys.exit(1)
+
+        finally:
+            if con:
+                con.commit()
+                con.close()
+
+        for file in game.files:
+            try:
+                con = lite.connect('ultraviolet.db')
+
+                cur = con.cursor()
+                # cur.execute('SELECT SQLITE_VERSION()')
+                print("saving game: %s %s" % (game.name, gameId))
+                sql = "INSERT INTO GAMEFILES ('gameId', 'name','url') VALUES ("+str(gameId)+",'"+ultraviolet.apputils.cleanString (file.fileName)+"','"+file.url+"')"
+
+                cur.execute(sql)
+                # data = cur.fetchone()
+                # print ("SQLite version: %s" % data)
+            except lite.Error as e :
+                print ("Error %s:" % e.args[0])
+                sys.exit(1)
+
+            finally:
+                if con:
+                    con.commit()
+                    con.close()
+
+
+
+
+    def queryGameList(self, gameName):
+
+        con = None
+        import sys
+        import sqlite3 as lite
+        try:
+            con = lite.connect('ultraviolet.db')
+
+            cur = con.cursor()
+            cur.execute('SELECT SQLITE_VERSION()')
+
+            data = cur.fetchone()
+
+            print ("SQLite version: %s" % data)
+
+        except lite.Error as e :
+            print ("Error %s:" % e.args[0])
+            sys.exit(1)
+
+        finally:
+
+            if con:
+                con.close()
+
+
 
 
     def getArt (self, name):

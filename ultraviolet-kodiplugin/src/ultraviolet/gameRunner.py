@@ -63,7 +63,7 @@ class gameRunner:
                 print("(%d) model %s..." % (i, model))
                 i +=1
 
-            modelOpt = input("Select model:")
+            modelOpt = ultraviolet.apputils.getInput("Select model:",i)
 
             selectedModel = models[int(modelOpt)]
 
@@ -75,7 +75,7 @@ class gameRunner:
                 print("(%d) bios %s..." % (i, bios))
                 i +=1
 
-            biosOpt = input("Select bios:")
+            biosOpt = ultraviolet.apputils.getInput("Select bios:",i)
 
             selectedBios = bioses[int(biosOpt)]
 
@@ -100,7 +100,6 @@ class gameRunner:
 
         print("Model: %s bios: %s " % (conf.model, conf.bios))
         return conf
-
 
 
     def runGame (self):
@@ -154,7 +153,7 @@ class gameRunner:
             print("(%d) rom %s..." % (i, rom))
             i +=1
 
-        option = input("Please enter the option of the rom you want to play...")
+        option = ultraviolet.apputils.getInput("Please enter the option of the rom you want to play...",i)
         print(option)
         print("Selected rom: %s" % option)
         rom = romList[int(option)]
