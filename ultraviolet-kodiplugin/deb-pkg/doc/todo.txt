@@ -1,0 +1,48 @@
+
+
+******************************
+Debian
+******************************
+
+Debian upstream
+---------------
+https://wiki.debian.org/UpstreamGuide
+
+Filesystem hierarchy
+--------------------
+https://wiki.debian.org/FilesystemHierarchyStandard
+
+
+INFO:
+-----
+Debian testing
+    python 3.4...
+
+
+******************************
+Ubuntu
+******************************
+
+Ubuntu upstream
+---------------
+https://wiki.ubuntu.com/UpstreamGuide
+
+
+
+TODO List
+---------
+
+0. Meet debian policies
+1. Use system tmp folder for temporary files
+    - http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+2. Use regular conf folders for app configuration
+    - http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+3. Turn it into a kodi plugin
+4. Upstream to the raspberry repositories
+5. Remove all command file extensions, considered harmfu. Use shebangs instead
+    - https://en.wikipedia.org/wiki/Filename_extension#Command_name_issues
+    - https://en.wikipedia.org/wiki/Shebang_%28Unix%29
+    - https://lists.debian.org/debian-policy/2003/04/msg00031.html
+6. Testing using "unittest2", testing framework for python
+    - https://docs.python.org/3/library/unittest.html
+

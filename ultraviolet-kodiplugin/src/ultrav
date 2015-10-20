@@ -1,0 +1,11 @@
+#!/usr/bin/python3
+__author__ = 'developer'
+
+import ultraviolet.gameRunnerDb
+
+
+print ("Running Ultraviolet ...")
+gameRunner = ultraviolet.gameRunnerDb.gameRunner()
+gameRunner.runGame()
+
+
