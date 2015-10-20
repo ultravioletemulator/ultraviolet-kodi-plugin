@@ -1,0 +1,14 @@
+Package: ultraviolet
+Source: ultraviolet
+Version: 0.1-alpha
+Architecture: amd64
+Maintainer: Asier Alkorta <asier.alkorta@gmail.com>
+Original-Maintainer: Asier Alkorta <asier.alkorta@gmail.com>
+Installed-Size: 10240
+Depends: fuse-emulator-sdl (>= 1.1.1), python3.4 (>= 3.4.3)
+Section: otherosfs
+Priority: optional
+Homepage: https://github.com/ultravioletemulator/ultraviolet-kodi-plugin
+Description: Ultraviolet is a front-end for fuse-sdl emulator providing direct access to the World Of Spectrum (http://www.worldofspectrum.org/) online archive via command line interface
+ * Direct access to the World of Spectrum online rom archive
+ * Search the game database by name instead provided online folder navigation

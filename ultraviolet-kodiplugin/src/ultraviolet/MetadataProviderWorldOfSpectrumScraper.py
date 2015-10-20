@@ -183,7 +183,7 @@ class MetadataProviderWorldOfSpectrum:
         print("indexing game: %s" % gameTitle)
         game = ultraviolet.dataStructures.Game()
         game.name= gameTitle
-        game.gameUrl= ultraviolet.MetadataProviderWorldOfSpectrum.MetadataProviderWorldOfSpectrum.urlHost+gameUrl
+        game.gameUrl= ultraviolet.MetadataProviderWorldOfSpectrumScraper.MetadataProviderWorldOfSpectrum.urlHost+gameUrl
 
         gameDescUrl = gameUrl
 

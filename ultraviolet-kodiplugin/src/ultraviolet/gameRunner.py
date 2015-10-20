@@ -26,7 +26,8 @@ class gameRunner:
     APP_HOME="/ultraviolet/"
     CONF_FOLDER="configuration/"
     CONF_FILE="configuration.pickle"
-    DB_NAME="ultraviolet.db"
+    DB_FOLDER= "db"
+    DB_NAME="db/ultraviolet.db"
 
 
 
@@ -43,6 +44,11 @@ class gameRunner:
         print ("Creating folder :"+confFolder)
         if (not os.path.exists(confFolder)):
             os.mkdir(confFolder)
+        print ("Creating db structure")
+        if (not os.path.exists(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_FOLDER)):
+            os.mkdir(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_FOLDER)
+            shutil.copy(self.DB_NAME, os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_FOLDER)
+
 
 
     def configureEmulator (self):

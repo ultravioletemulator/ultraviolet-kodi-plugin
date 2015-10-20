@@ -38,7 +38,10 @@ class MetadataProviderDbIndexWorldOfSpectrum:
         resGameList = []
 
         try:
-            con = lite.connect(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_NAME)
+            dbName= os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_NAME
+            print("Dbname %s " % dbName)
+
+            con = lite.connect(dbName)
 
             cur = con.cursor()
             # cur.execute('SELECT SQLITE_VERSION()')
