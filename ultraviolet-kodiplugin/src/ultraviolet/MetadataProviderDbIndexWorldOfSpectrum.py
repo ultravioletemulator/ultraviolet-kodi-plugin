@@ -98,7 +98,6 @@ class MetadataProviderDbIndexWorldOfSpectrum:
     def getRom (self, game):
         print ("Getting rom:"+game.id)
 
-
         import sys
         import os
         import sqlite3 as lite
@@ -160,6 +159,7 @@ class MetadataProviderDbIndexWorldOfSpectrum:
                 file.gameId = r.gameId
                 file.url = r.url
                 resFileList.append(file)
+                # game.files.append(file)
 
                 # data = cur.fetchone()
                 # print ("SQLite version: %s" % data)

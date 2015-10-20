@@ -8,8 +8,8 @@ import ultraviolet
 
 
 
-TMP_FOLDER="tmp/"
-TMP_BIOS_FOLDER="tmpbios/"
+TMP_FOLDER="/tmp/"
+TMP_BIOS_FOLDER="/tmpbios/"
 TMP_FILE="tmp.file"
 
 def cleanString( str):
@@ -31,6 +31,7 @@ def getInput(msg, length):
 
 
 def unzipFile ( prefix, file):
+   print ("Unzipping file %s to %s "%(prefix,file))
    fh = open(file, 'rb')
    newName = file.replace(".zip","")
    z = zipfile.ZipFile(fh)

@@ -36,9 +36,19 @@ class gameRunner:
 
 
     def createFolderStructure(self):
+
         foldername= os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME
         if (not os.path.exists(foldername)):
             os.mkdir(foldername)
+
+        foldername= os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_FOLDER
+        if (not os.path.exists(foldername)):
+            os.mkdir(foldername)
+
+        foldername= os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER
+        if (not os.path.exists(foldername)):
+            os.mkdir(foldername)
+
 
         confFolder= os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.CONF_FOLDER
         print ("Creating folder :"+confFolder)
@@ -62,7 +72,7 @@ class gameRunner:
             print("laoding pickle...")
             import pickle
             with open(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.CONF_FOLDER+ultraviolet.gameRunner.gameRunner. CONF_FILE, 'rb') as f:
-                conf= pickle.load(f)
+                conf = pickle.load(f)
 
         else:
             conf =ultraviolet.dataStructures.configuration()
@@ -156,6 +166,12 @@ class gameRunner:
 
         gameFile = provider.getRom(selectedGame)
 
+        unzipFolderName =  os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_FOLDER+gameFile.name
+        print("Unzipping to : %s" % (unzipFolderName))
+        if (not os.path.exists(unzipFolderName)):
+            os.mkdir(unzipFolderName)
+
+        ultraviolet.apputils.unzipFile(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_FOLDER+gameFile.name,os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_FILE)
         romList = provider.listZipRoms(gameFile)
 
         print("****************************")
@@ -171,7 +187,7 @@ class gameRunner:
         print("Selected file: %s" % option)
         rom = romList[int(option)]
         print("Running file: %s" % rom)
-        fullRomName = os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmp/"+gameFile.name+"/"+rom
+        fullRomName = os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_FOLDER+gameFile.name+"/"+rom
 
 
         selectedModel=conf.model
@@ -189,6 +205,9 @@ class gameRunner:
 
         if (os.path.exists("tmp.file")):
             shutil.rmtree("tmp.file")
+
+        if (os.path.exists("tmp")):
+            shutil.rmtree("tmp")
 
 
 

@@ -71,6 +71,7 @@ class PlatformProviderSpectrum:
         selectedFile = files[int(selectedFileIndex)]
 
         game.fileUrl= selectedFile.url
+        game.files.append(selectedFile)
 
         file = self.metadataProvider.downloadRom(selectedFile)
         return file
