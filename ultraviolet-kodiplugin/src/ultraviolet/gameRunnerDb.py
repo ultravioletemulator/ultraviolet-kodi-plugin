@@ -17,6 +17,7 @@ import ultraviolet.dataStructures
 from json import JSONEncoder
 from json import JSONDecoder
 
+import ultraviolet.PlatformProviderDbSpectrum
 
 
 
@@ -89,10 +90,9 @@ class gameRunner:
                 print("(%d) bios %s..." % (i, bios))
                 i +=1
 
-            biosOpt = ultraviolet.apputils.getInput("Select bios:",i)
+            biosOpt = ultraviolet.apputils.getInput("Select bios:" , i)
 
             selectedBios = bioses[int(biosOpt)]
-
 
             conf.model= selectedModel
             conf.bios= selectedBios
@@ -134,7 +134,7 @@ class gameRunner:
         conf = self.configureEmulator()
         ultraviolet.gameRunner.gameRunner.configuration= conf
         #provider = platform.PlatformProviderSpectrum()
-        provider = ultraviolet.PlatformProviderSpectrum.PlatformProviderSpectrum()
+        provider = ultraviolet.PlatformProviderDbSpectrum.PlatformProviderSpectrum()
 
         # provider = PlatformProviderSpectrum()
         # metadataProvider = ultraviolet.MetadataProviderTgdb.MetadataProviderTgdb()
@@ -154,68 +154,25 @@ class gameRunner:
         summary = provider.downloadSummary(selectedGame)
         print(summary)
 
-
-        # gameList = provider.searchRom(name)
-
-        # print("Search results:")
-        # # PrintRoms
-        # i=0
-        # for game in gameList :
-        #     print("(%d) %s." % (i, game.name))
-        #     i+=1
-        #
-        # option = input("Please enter the option of the game you want to play...")
-        #
-        # selectedGame = gameList[int(option)]
-
         gameFile = provider.getRom(selectedGame)
 
-        romList = provider.listZipRoms(selectedGame)
+        romList = provider.listZipRoms(gameFile)
 
         print("****************************")
-        print("%s roms:" % selectedGame.name)
+        print("Game: %s " % selectedGame.name)
         print("****************************")
-        i=0
+        i = 0
         for rom in romList:
-            print("(%d) rom %s..." % (i, rom))
+            print("(%d) file %s..." % (i, rom))
             i +=1
 
         option = ultraviolet.apputils.getInput("Please enter the option of the rom you want to play...",i)
         print(option)
-        print("Selected rom: %s" % option)
+        print("Selected file: %s" % option)
         rom = romList[int(option)]
-        print("Runnign rom: %s" % rom)
-        fullRomName = os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmp/"+selectedGame.name+"/"+rom
+        print("Running file: %s" % rom)
+        fullRomName = os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmp/"+gameFile.name+"/"+rom
 
-
-
-        print("Select Zx Spectrum configuration...")
-        # print("Select model.")
-        # # print (os.path("."))
-        # print(os.path.dirname(os.path.realpath(".")))
-        # models =os.listdir(self.BIOSFOLDER)
-        # i=0
-        # for model in models:
-        #     print("(%d) model %s..." % (i, model))
-        #     i +=1
-        #
-        # modelOpt = input("Select model:")
-        #
-        # selectedModel = models[int(modelOpt)]
-        #
-        #
-        #
-        # print("Select available bios-es for the model %s " % selectedModel)
-        #
-        # bioses =os.listdir(self.BIOSFOLDER+selectedModel)
-        # i=0
-        # for bios in bioses:
-        #     print("(%d) bios %s..." % (i, bios))
-        #     i +=1
-        #
-        # biosOpt = input("Select bios:")
-        #
-        # selectedBios = bioses[int(biosOpt)]
 
         selectedModel=conf.model
         selectedBios=conf.bios
@@ -228,10 +185,10 @@ class gameRunner:
         #
         # summaryFile = provider.downloadSummary(selectedGame)
 
-
         # provider.closeRom(selectedGame)
 
-        shutil.rmtree("tmp.file")
+        if (os.path.exists("tmp.file")):
+            shutil.rmtree("tmp.file")
 
 
 

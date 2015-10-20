@@ -2,9 +2,10 @@ import ultraviolet.dataStructures
 import urllib3
 import shutil
 import os
-import zipfile
+
 # import MetadataProviderTgdb
 import ultraviolet.MetadataProviderDbIndexWorldOfSpectrum
+
 class PlatformProviderSpectrum:
     id = 1
     name = "Zx Spectrum"
@@ -30,7 +31,7 @@ class PlatformProviderSpectrum:
         for game in games:
             gameId = game.id
             gameTitle = game.name
-            print("(%s) %s" % (i, gameTitle))
+            print("(%s) %s (%d)" % (i, gameTitle, gameId))
             resGame = ultraviolet.dataStructures.Game()
             resGame.name = gameTitle
             resGame.id = gameId
@@ -43,48 +44,38 @@ class PlatformProviderSpectrum:
         selectedGameIdx = ultraviolet.apputils.getInput ("Please enter the id of the game you want to play.",i)
         selectedGame = resGameList[int(selectedGameIdx)]
         selectedGameId= resGameIdList[int(selectedGameIdx)]
+        print ("Selected game: %d " % selectedGameId)
+        game = self.metadataProvider.getGameById(self.name, selectedGameId)
+        print ("Game: %d " % selectedGameId)
+        print(game)
+        return game
 
-        return selectedGame
+
 
 
     # def sRom (query):
 #     print(" searching for rom: %s" % (query))
 #     return ['1', '2', '3']
 
-    def saveFile (self, source, dest):
-        import os.path
-        dirName = os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"download"
-        if (not os.path.exists(dirName)):
-            os.mkdir(dirName)
-            if (ultraviolet.gameRunner.conf.download):
-                shutil.copy(source, dirName+"/"+dest)
+    def getRom(self, game):
+        print ("getRom...")
+        print(game)
 
-    def getRom(self, gameId):
+        files = self.metadataProvider.getGameFiles(game)
+        i = 0
+        for file in files:
+            print("(%d) %s " % (i, file.name))
+            i +=1
+        selectedFileIndex = ultraviolet.apputils.getInput("Select file", i)
 
-        self.metadataProvider.downloadRom(gameId)
+        selectedFile = files[int(selectedFileIndex)]
 
+        game.fileUrl= selectedFile.url
 
-    def unzipFile (self, prefix, file):
-        fh = open(file, 'rb')
-        newName = file.replace(".zip","")
-        z = zipfile.ZipFile(fh)
-        for name in z.namelist():
-            outpath = prefix
-            z.extract(name, outpath)
-        fh.close()
+        file = self.metadataProvider.downloadRom(selectedFile)
+        return file
+        # ultraviolet.apputils.unzipFile()
 
-
-# http = urllib3.PoolManager()
-        # r = http.request('GET', game.fileUrl)
-        # with open(path, 'wb') as out:
-        # while True:
-        #     data = r.read(chunk_size)
-        #     if data is None:
-        #         break
-        #     out.write(data)
-        #
-        # r.release_conn()
-        return "Zip file"
 
 
     def listFile (self, name):
@@ -102,7 +93,7 @@ class PlatformProviderSpectrum:
 
         if (bios.endswith(".zip")):
             nameClean=bios.replace(".zip", "")
-            self.unzipFile(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER, ultraviolet.gameRunner.gameRunner.BIOSFOLDER +model+"/"+bios)
+            ultraviolet.apputils.unzipFile(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER, ultraviolet.gameRunner.gameRunner.BIOSFOLDER +model+"/"+bios)
 
         # os.system("fuse-sdl "+name+" --rom-128 bios/"+bios)
         bioses = os.listdir(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER)
@@ -142,8 +133,8 @@ class PlatformProviderSpectrum:
         return "cover"
 
 
-    def downloadSummary (self, game):
-        print("Downloading summary for %s..." % (game.name))
+    def downloadSummary (self, gameName):
+        print("Downloading summary for %s..." % (gameName))
         return "summary"
 
     def closeRom (self, game):
@@ -152,7 +143,7 @@ class PlatformProviderSpectrum:
 
     def listZipRoms (self, game):
         from os import listdir
-        files = listdir(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"tmp/"+game.name)
+        files = listdir(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_FOLDER+game.name)
         return files
 
 

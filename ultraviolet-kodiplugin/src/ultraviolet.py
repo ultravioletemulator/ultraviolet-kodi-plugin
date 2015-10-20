@@ -9,10 +9,10 @@ __author__ = 'developer'
 
 ##from ultraviolet.runGame import GameRunner
 
-import ultraviolet.gameRunner
+import ultraviolet.gameRunnerDb
 
 print ("Running Ultraviolet ...")
-gameRunner = ultraviolet.gameRunner.gameRunner()
+gameRunner = ultraviolet.gameRunnerDb.gameRunner()
 gameRunner.runGame()
 
 
