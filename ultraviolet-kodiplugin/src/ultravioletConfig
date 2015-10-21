@@ -1,0 +1,10 @@
+#!/usr/bin/python3
+__author__ = 'developer'
+
+import ultraviol.configuration as conf
+
+
+print ("Running Ultraviolet ...")
+conf.deleteConfiguration()
+conf.createFolderStructure()
+conf.configureEmulator()
