@@ -95,19 +95,19 @@ class PlatformProviderSpectrum:
         print("Model %s bios %s" % (model, bios))
 
         try:
-            shutil.rmtree(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER)
+            shutil.rmtree(ultraviol.configuration.TMP_FOLDER+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER)
         except:
             print("")
 
         if (bios.endswith(".zip")):
             nameClean=bios.replace(".zip", "")
-            self.unzipFile(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER, ultraviol.gameRunner.gameRunner.BIOSFOLDER +model+"/"+bios)
+            self.unzipFile(ultraviol.configuration.TMP_FOLDER+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER, ultraviol.gameRunner.gameRunner.BIOSFOLDER +model+"/"+bios)
 
         # os.system("fuse-sdl "+name+" --rom-128 bios/"+bios)
-        bioses = os.listdir(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER)
+        bioses = os.listdir(ultraviol.configuration.TMP_FOLDER+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER)
         biosStr=""
         for bios in bioses:
-            biosStr += os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+bios+" "
+            biosStr += ultraviol.configuration.TMP_FOLDER+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+bios+" "
 
         # command = "fuse-sdl "+name+" --rom-speccyboot "+biosStr
         #command = "fuse-sdl "+name+" --speed 100 --full-screen --graphics-filter hq3x  -j  --rom-"+model+" "+biosStr
@@ -151,7 +151,7 @@ class PlatformProviderSpectrum:
 
     def listZipRoms (self, game):
         from os import listdir
-        files = listdir(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+"tmp/"+game.name)
+        files = listdir(ultraviol.configuration.TMP_FOLDER+ultraviol.gameRunner.gameRunner.APP_HOME+"tmp/"+game.name)
         return files
 
 

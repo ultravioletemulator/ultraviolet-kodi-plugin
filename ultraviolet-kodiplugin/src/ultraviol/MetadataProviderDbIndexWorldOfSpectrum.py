@@ -38,7 +38,7 @@ class MetadataProviderDbIndexWorldOfSpectrum:
         resGameList = []
 
         try:
-            dbName= os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_NAME
+            dbName= ultraviol.apputils.getDbFolder() +ultraviol.configuration.DB_NAME
             print("Dbname %s " % dbName)
 
             con = lite.connect(dbName)
@@ -146,7 +146,7 @@ class MetadataProviderDbIndexWorldOfSpectrum:
         resFileList = []
 
         try:
-            con = lite.connect(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_NAME)
+            con = lite.connect(ultraviol.apputils.getDbFolder()+ultraviol.configuration.DB_NAME)
 
             cur = con.cursor()
             # cur.execute('SELECT SQLITE_VERSION()')
@@ -188,7 +188,7 @@ class MetadataProviderDbIndexWorldOfSpectrum:
 
         game = ultraviol.dataStructures.Game()
         try:
-            con = lite.connect(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_NAME)
+            con = lite.connect(ultraviol.apputils.getDbFolder()+ultraviol.configuration.DB_NAME)
 
             cur = con.cursor()
             # cur.execute('SELECT SQLITE_VERSION()')

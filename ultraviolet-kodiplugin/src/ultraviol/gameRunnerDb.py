@@ -25,8 +25,9 @@ class gameRunner:
 
     def runGame (self):
 
-        ultraviol.configuration.createFolderStructure()
-        conf = ultraviol.configuration.configureEmulator()
+        # ultraviol.configuration.createFolderStructure()
+        # conf = ultraviol.configuration.configureEmulator()
+        conf = ultraviol.configuration.loadConfiguration()
         ultraviol.gameRunner.gameRunner.configuration= conf
         #provider = platform.PlatformProviderSpectrum()
         provider = ultraviol.PlatformProviderDbSpectrum.PlatformProviderSpectrum()
@@ -51,12 +52,12 @@ class gameRunner:
 
         gameFile = provider.getRom(selectedGame)
 
-        unzipFolderName =  os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_FOLDER+gameFile.name
+        unzipFolderName =  ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+gameFile.name
         print("Unzipping to : %s" % (unzipFolderName))
         if (not os.path.exists(unzipFolderName)):
             os.mkdir(unzipFolderName)
 
-        ultraviol.apputils.unzipFile(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_FOLDER+gameFile.name,os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_FILE)
+        ultraviol.apputils.unzipFile(ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+gameFile.name,ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+ultraviol.configuration.TMP_FILE)
         romList = provider.listZipRoms(gameFile)
 
         print("****************************")
@@ -72,7 +73,7 @@ class gameRunner:
         print("Selected file: %s" % option)
         rom = romList[int(option)]
         print("Running file: %s" % rom)
-        fullRomName = os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_FOLDER+gameFile.name+"/"+rom
+        fullRomName = ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+gameFile.name+"/"+rom
 
 
         selectedModel=conf.model

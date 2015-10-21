@@ -11,15 +11,6 @@ import ultraviol.dataStructures
 
 class gameRunner:
 
-    BIOSFOLDER="ultraviol/bios/"
-    APP_HOME="/ultraviolet/"
-    PKG_HOME="/ultraviol/"
-    CONF_FOLDER="configuration/"
-    CONF_FILE="configuration.pickle"
-    DB_FOLDER= "db"
-    DB_NAME="db/ultraviolet.db"
-
-
 
     configuration=None
 
@@ -30,14 +21,14 @@ class gameRunner:
         if (not os.path.exists(foldername)):
             os.mkdir(foldername)
 
-        confFolder= os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER
+        confFolder= ultraviol.apputils.getConfFolder()+ultraviol.gameRunner.gameRunner.CONF_FOLDER
         print ("Creating folder :"+confFolder)
         if (not os.path.exists(confFolder)):
             os.mkdir(confFolder)
         print ("Creating db structure")
-        if (not os.path.exists(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_FOLDER)):
-            os.mkdir(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_FOLDER)
-            shutil.copy(self.DB_NAME, os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_FOLDER)
+        if (not os.path.exists(ultraviol.apputils.getConfFolder()+ultraviol.gameRunner.gameRunner.DB_FOLDER)):
+            os.mkdir(ultraviol.apputils.getConfFolder()+ultraviol.gameRunner.gameRunner.DB_FOLDER)
+            shutil.copy(self.DB_NAME, ultraviol.apputils.getConfFolder()+ultraviol.gameRunner.gameRunner.DB_FOLDER)
 
 
 
@@ -46,7 +37,7 @@ class gameRunner:
         print("Select Zx Spectrum configuration...")
 
         conf=None
-        if (os.path.exists(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner. CONF_FILE)):
+        if (os.path.exists(ultraviol.apputils.getConfFolder()+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner. CONF_FILE)):
             print ("if")
             # import json
             # from pprint import pprint
@@ -56,7 +47,7 @@ class gameRunner:
 
             print("laoding pickle...")
             import pickle
-            with open(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner. CONF_FILE, 'rb') as f:
+            with open(ultraviol.apputils.getConfFolder()+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner. CONF_FILE, 'rb') as f:
                 conf= pickle.load(f)
 
         else:
@@ -117,7 +108,7 @@ class gameRunner:
 
             print("Writing pickle...")
             import pickle
-            with open(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner. CONF_FILE, 'bw+') as f:
+            with open(ultraviol.apputils.getConfFolder()+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner. CONF_FILE, 'bw+') as f:
                 pickle.dump(conf, f)
 
         print("Model: %s bios: %s " % (conf.model, conf.bios))
@@ -181,7 +172,7 @@ class gameRunner:
         print("Selected rom: %s" % option)
         rom = romList[int(option)]
         print("Runnign rom: %s" % rom)
-        fullRomName = os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+"tmp/"+selectedGame.name+"/"+rom
+        fullRomName = ultraviol.configuration.TMP_FOLDER+ultraviol.gameRunner.gameRunner.APP_HOME+"tmp/"+selectedGame.name+"/"+rom
 
 
 
@@ -228,6 +219,3 @@ class gameRunner:
         # provider.closeRom(selectedGame)
 
         shutil.rmtree("tmp.file")
-
-
-

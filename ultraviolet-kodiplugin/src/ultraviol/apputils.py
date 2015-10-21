@@ -8,10 +8,6 @@ import ultraviol
 
 
 
-TMP_FOLDER="/tmp/"
-TMP_BIOS_FOLDER="/tmpbios/"
-TMP_FILE="tmp.file"
-
 def cleanString( str):
     if not str is None:
         return str.replace("'", "")
@@ -44,10 +40,10 @@ def unzipFile ( prefix, file):
 
 def saveFile (source, dest):
     import os.path
-    dirName = os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+"download"
+    dirName = os.getenv("HOME")+ultraviol.configuration.APP_HOME+ultraviol.configuration.DOWNLOAD_FOLDER
     if (not os.path.exists(dirName)):
-        os.mkdir(dirName)
-        if (ultraviol.gameRunner.conf.download):
+        os.makedirs(dirName)
+        if (ultraviol.gameRunner.configuration.download):
             shutil.copy(source, dirName+"/"+dest)
 
 
@@ -56,7 +52,7 @@ def downloadFile ( fileUrl, saveName):
   print("Downloading file from url %s ..." % (fileUrl))
 
   c = urllib3.PoolManager()
-  tmpFileName= os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+TMP_FILE
+  tmpFileName= ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+ultraviol.configuration.TMP_FILE
   try:
     shutil.rmtree(tmpFileName)
   except:
@@ -71,3 +67,12 @@ def downloadFile ( fileUrl, saveName):
   ultraviol.apputils.saveFile(tmpFileName, name)
 
 
+def getHomeFolder(appName):
+    return os.environ("HOME")+"/"+appName
+
+
+def getConfFolder ():
+    return os.environ["HOME"]+ultraviol.configuration.APP_CONFIG_HOME+"/"+ultraviol.configuration.CONF_FOLDER
+
+def getDbFolder ():
+    return os.environ["HOME"]+ultraviol.configuration.APP_CONFIG_HOME+"/"+ultraviol.configuration.DB_FOLDER

@@ -84,19 +84,19 @@ class PlatformProviderSpectrum:
         print("Model %s bios %s" % (model, bios))
 
         try:
-            shutil.rmtree(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER)
+            shutil.rmtree(ultraviol.configuration.TMP_FOLDER+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER)
         except:
             print("")
 
         if (bios.endswith(".zip")):
             nameClean=bios.replace(".zip", "")
-            ultraviol.apputils.unzipFile(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER, ultraviol.gameRunner.gameRunner.BIOSFOLDER +model+"/"+bios)
+            ultraviol.apputils.unzipFile(ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+ultraviol.configuration.TMP_BIOS_FOLDER, ultraviol.configuration.BIOSFOLDER +model+"/"+bios)
 
         # os.system("fuse-sdl "+name+" --rom-128 bios/"+bios)
-        bioses = os.listdir(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER)
+        bioses = os.listdir(ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+ultraviol.configuration.TMP_BIOS_FOLDER)
         biosStr=""
         for bios in bioses:
-            biosStr += os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+bios+" "
+            biosStr += ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+ultraviol.configuration.TMP_BIOS_FOLDER+bios+" "
 
         # command = "fuse-sdl "+name+" --rom-speccyboot "+biosStr
         #command = "fuse-sdl "+name+" --speed 100 --full-screen --graphics-filter hq3x  -j  --rom-"+model+" "+biosStr
@@ -115,11 +115,11 @@ class PlatformProviderSpectrum:
         if model =="48":
             res= " --machine "+model+" --rom-"+model+" "+bios
         elif model =="128":
-            res = " --machine "+model+" --rom-"+model+"-0 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-0.rom --rom-"+model+"-1 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-1.rom "
+            res = " --machine "+model+" --rom-"+model+"-0 "+ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+ultraviol.configuration.TMP_BIOS_FOLDER+biosName+"-0.rom --rom-"+model+"-1 "+ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+ultraviol.configuration.TMP_BIOS_FOLDER+biosName+"-1.rom "
         elif model=="plus2":
-            res = " --machine "+model+" --rom-"+model+"-0 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-0.rom --rom-"+model+"-1 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-1.rom "
+            res = " --machine "+model+" --rom-"+model+"-0 "+ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+ultraviol.configuration.TMP_BIOS_FOLDER+biosName+"-0.rom --rom-"+model+"-1 "+ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+ultraviol.configuration.TMP_BIOS_FOLDER+biosName+"-1.rom "
         elif model=="plus3":
-            res = " --machine "+model+" --rom-"+model+"-0 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-0.rom --rom-"+model+"-1 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-1.rom  --rom-"+model+"-2 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-2.rom --rom-"+model+"-3 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-3.rom "
+            res = " --machine "+model+" --rom-"+model+"-0 "+ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+ultraviol.configuration.TMP_BIOS_FOLDER+biosName+"-0.rom --rom-"+model+"-1 "+ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+ultraviol.configuration.TMP_BIOS_FOLDER+biosName+"-1.rom  --rom-"+model+"-2 "+ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+ultraviol.configuration.TMP_BIOS_FOLDER+biosName+"-2.rom --rom-"+model+"-3 "+ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+ultraviol.configuration.TMP_BIOS_FOLDER+biosName+"-3.rom "
         return res
 
     def downloadArt (self, name):
@@ -140,7 +140,7 @@ class PlatformProviderSpectrum:
 
     def listZipRoms (self, game):
         from os import listdir
-        files = listdir(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_FOLDER+game.name)
+        files = listdir(ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+game.name)
         return files
 
 

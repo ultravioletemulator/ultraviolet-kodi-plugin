@@ -6,59 +6,76 @@ import os
 import shutil
 
 
-DB_NAME="db/ultraviolet.db"
+DB_NAME="ultraviolet.db"
+DB_FOLDER= "db/"
 BIOSFOLDER="ultraviol/bios/"
+
+DOWNLOAD_FOLDER ="download"
+
+PKG_HOME="/ultraviol/"
+
+
+APP_HOME="/ultraviolet/"
+APP_CONFIG_HOME="/.ultraviolet/"
+
+TMP_FOLDER="/tmp/"
+TMP_BIOS_FOLDER="/tmpbios/"
+TMP_FILE="tmp.file"
+
+CONF_FOLDER="configuration/"
+CONF_FILE="configuration.pickle"
 
 def createFolderStructure():
 
-        foldername= os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME
+        foldername= ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME
         if (not os.path.exists(foldername)):
             os.mkdir(foldername)
 
-        foldername= os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_FOLDER
+        foldername= ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+ultraviol.configuration.TMP_FOLDER
         if (not os.path.exists(foldername)):
             os.mkdir(foldername)
 
-        foldername= os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER
+        foldername= ultraviol.configuration.TMP_FOLDER+ultraviol.configuration.APP_HOME+ultraviol.configuration.TMP_BIOS_FOLDER
         if (not os.path.exists(foldername)):
-            os.mkdir(foldername)
+            os.makedirs(foldername)
 
-
-        confFolder= os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER
+        confFolder= ultraviol.apputils.getConfFolder()
         print ("Creating folder :"+confFolder)
         if (not os.path.exists(confFolder)):
-            os.mkdir(confFolder)
+            os.makedirs(confFolder)
 
         print ("Creating db structure")
-        if (not os.path.exists(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_FOLDER)):
-            os.mkdir(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_FOLDER)
+        if (not os.path.exists(ultraviol.apputils.getDbFolder())):
+            os.makedirs(ultraviol.apputils.getDbFolder())
 
-        if (not os.path.exists(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_FOLDER+ultraviol.configuration.DB_NAME)):
-            shutil.copy("."+ultraviol.gameRunner.gameRunner.PKG_HOME+ultraviol.configuration.DB_NAME, os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_FOLDER)
+        print ("copying...")
+        dbFolder = ultraviol.apputils.getDbFolder()
+        dbFile = dbFolder+ultraviol.configuration.DB_NAME
+        origDbName ="."+ultraviol.configuration.PKG_HOME+ultraviol.configuration.DB_FOLDER+ultraviol.configuration.DB_NAME
+        if (not os.path.exists(dbFile)):
+            print (" %r " % (os.path.exists(origDbName)))
+            print ("copying %s to %s ..." % (origDbName, dbFolder))
+            shutil.copy(origDbName, dbFolder)
+
 
 
 def deleteConfiguration():
     print ("Deleting configuration...")
-    confFileName =os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner. CONF_FILE
-    if (os._exists(confFileName )):
-        os.remove(  )
+    confFileName =ultraviol.apputils.getConfFolder()+ultraviol.configuration.CONF_FOLDER+ultraviol.configuration.CONF_FILE
+    if (os.path.exists(confFileName )):
+        os.remove(confFileName)
 
 def configureEmulator ():
 
         print("Select Zx Spectrum configuration...")
 
         conf=None
-        if (os.path.exists(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner. CONF_FILE)):
+        if (os.path.exists(ultraviol.apputils.getConfFolder()+ultraviol.configuration.CONF_FOLDER+ultraviol.configuration. CONF_FILE)):
             print ("if")
-            # import json
-            # from pprint import pprint
-            # with open(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+self.CONF_FOLDER+'configuration.json') as data_file:
-            #     conf = json.load(data_file)
-            # pprint(conf)
 
             print("loading pickle...")
             import pickle
-            confFileName= os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner.CONF_FILE
+            confFileName= ultraviol.apputils.getConfFolder()+ultraviol.configuration.CONF_FOLDER+ultraviol.configuration.CONF_FILE
             print (confFileName)
             with open(confFileName, 'rb') as f:
                 conf = pickle.load(f)
@@ -97,16 +114,6 @@ def configureEmulator ():
             conf.model= selectedModel
             conf.bios= selectedBios
 
-            # jsonConf= JSONEncoder.encode(conf)
-            # import json
-            # with open(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner. CONF_FILE, 'w+') as outfile:
-            # json.dump(jsonConf, outfile)
-            # json.dumps(conf, default=lambda o: o.__dict__,
-            #               sort_keys=True, indent=4)
-            # with open(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner. CONF_FILE, "w+") as outfile:
-            #     # json.dump(conf, outfile, indent=2)
-            #     json.dump(conf, cls=CustomEncoder)
-
             downloadOptList=[]
             downloadOptList.append("True")
             downloadOptList.append("False")
@@ -121,8 +128,16 @@ def configureEmulator ():
 
             print("Writing pickle...")
             import pickle
-            with open(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner. CONF_FILE, 'bw+') as f:
+            with open(ultraviol.apputils.getConfFolder()+ultraviol.configuration.CONF_FILE, 'bw+') as f:
                 pickle.dump(conf, f)
 
         print("Model: %s bios: %s " % (conf.model, conf.bios))
+        return conf
+
+
+def loadConfiguration():
+    print("loading configuration...")
+    import pickle
+    with open(ultraviol.apputils.getConfFolder()+ultraviol.configuration.CONF_FILE, 'rb') as f:
+        conf= pickle.load(f)
         return conf
