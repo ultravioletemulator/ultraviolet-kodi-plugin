@@ -33,16 +33,25 @@ TODO List
 ---------
 
 0. Meet debian policies
+
 1. Use system tmp folder for temporary files
     - http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+
 2. Use regular conf folders for app configuration
     - http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
-3. Turn it into a kodi plugin
-4. Upstream to the raspberry repositories
-5. Remove all command file extensions, considered harmfu. Use shebangs instead
+
+3. Remove all command file extensions, considered harmful. Use shebangs instead
     - https://en.wikipedia.org/wiki/Filename_extension#Command_name_issues
     - https://en.wikipedia.org/wiki/Shebang_%28Unix%29
     - https://lists.debian.org/debian-policy/2003/04/msg00031.html
-6. Testing using "unittest2", testing framework for python
+
+4. Use automake as build tool?¿ Not necesary
+    - https://www.gnu.org/software/automake/manual/html_node/Python.html
+
+5. Turn it into a kodi plugin
+
+6. Upstream to the raspberry repositories
+
+7. Testing using "unittest2", testing framework for python
     - https://docs.python.org/3/library/unittest.html
 

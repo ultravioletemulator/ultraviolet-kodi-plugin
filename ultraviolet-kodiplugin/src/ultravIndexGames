@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 __author__ = 'developer'
-import ultraviolet.PlatformProviderSpectrum
-import ultraviolet.MetadataProviderWorldOfSpectrumScraper
-import ultraviolet.apputils
+import ultraviol.PlatformProviderSpectrum
+import ultraviol.MetadataProviderWorldOfSpectrumScraper
+import ultraviol.apputils
 
 
-provider = ultraviolet.PlatformProviderSpectrum.PlatformProviderSpectrum()
-metadataProvider = ultraviolet.MetadataProviderWorldOfSpectrumScraper.MetadataProviderWorldOfSpectrum()
+provider = ultraviol.PlatformProviderSpectrum.PlatformProviderSpectrum()
+metadataProvider = ultraviol.MetadataProviderWorldOfSpectrumScraper.MetadataProviderWorldOfSpectrum()
 metadataProvider.indexGames()
