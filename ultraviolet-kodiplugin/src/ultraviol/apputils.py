@@ -43,7 +43,7 @@ def saveFile (source, dest):
     dirName = os.getenv("HOME")+ultraviol.configuration.APP_HOME+ultraviol.configuration.DOWNLOAD_FOLDER
     if (not os.path.exists(dirName)):
         os.makedirs(dirName)
-        if (ultraviol.gameRunner.configuration.download):
+        if (ultraviol.configuration.download):
             shutil.copy(source, dirName+"/"+dest)
 
 
