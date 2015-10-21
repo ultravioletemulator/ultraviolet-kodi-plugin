@@ -3,10 +3,10 @@ __author__ = 'developer'
 import urllib3
 import shutil
 import xml.dom.minidom
-import ultraviolet.dataStructures
+import ultraviol.dataStructures
 import requests
 from lxml import html
-import ultraviolet.gameRunner
+import ultraviol.gameRunner
 
 import os
 
@@ -38,7 +38,7 @@ class MetadataProviderDbIndexWorldOfSpectrum:
         resGameList = []
 
         try:
-            dbName= os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_NAME
+            dbName= os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_NAME
             print("Dbname %s " % dbName)
 
             con = lite.connect(dbName)
@@ -50,8 +50,8 @@ class MetadataProviderDbIndexWorldOfSpectrum:
             cur.execute(sql)
 
             for tuple in cur.fetchall():
-                r = ultraviolet.dataStructures.reg(cur, tuple)
-                game= ultraviolet.dataStructures.Game()
+                r = ultraviol.dataStructures.reg(cur, tuple)
+                game= ultraviol.dataStructures.Game()
                 game.name = r.name
                 game.id = r.id
                 resGameList.append(game)
@@ -79,7 +79,7 @@ class MetadataProviderDbIndexWorldOfSpectrum:
         import os
         import sqlite3 as lite
         try:
-            con = lite.connect(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_NAME)
+            con = lite.connect(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_NAME)
 
             cur = con.cursor()
             cur.execute('SELECT SQLITE_VERSION()')
@@ -107,7 +107,7 @@ class MetadataProviderDbIndexWorldOfSpectrum:
         resGameList = []
 
         try:
-            con = lite.connect(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_NAME)
+            con = lite.connect(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_NAME)
 
             cur = con.cursor()
             # cur.execute('SELECT SQLITE_VERSION()')
@@ -116,8 +116,8 @@ class MetadataProviderDbIndexWorldOfSpectrum:
             cur.execute(sql)
 
             for tuple in cur.fetchall():
-                r = ultraviolet.dataStructures.reg(cur, tuple)
-                game = ultraviolet.dataStructures.Game()
+                r = ultraviol.dataStructures.reg(cur, tuple)
+                game = ultraviol.dataStructures.Game()
                 game.name = r.name
                 game.id = r.id
 
@@ -146,7 +146,7 @@ class MetadataProviderDbIndexWorldOfSpectrum:
         resFileList = []
 
         try:
-            con = lite.connect(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_NAME)
+            con = lite.connect(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_NAME)
 
             cur = con.cursor()
             # cur.execute('SELECT SQLITE_VERSION()')
@@ -155,8 +155,8 @@ class MetadataProviderDbIndexWorldOfSpectrum:
             cur.execute(sql)
 
             for tuple in cur.fetchall():
-                r = ultraviolet.dataStructures.reg(cur, tuple)
-                file = ultraviolet.dataStructures.File()
+                r = ultraviol.dataStructures.reg(cur, tuple)
+                file = ultraviol.dataStructures.File()
                 file.name = r.name
                 file.id = r.id
                 file.gameId = r.gameId
@@ -186,9 +186,9 @@ class MetadataProviderDbIndexWorldOfSpectrum:
         import os
         import sqlite3 as lite
 
-        game = ultraviolet.dataStructures.Game()
+        game = ultraviol.dataStructures.Game()
         try:
-            con = lite.connect(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_NAME)
+            con = lite.connect(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_NAME)
 
             cur = con.cursor()
             # cur.execute('SELECT SQLITE_VERSION()')
@@ -219,7 +219,7 @@ class MetadataProviderDbIndexWorldOfSpectrum:
 
     def downloadRom (self, file):
         print("Downloading game %s from url %s ..." % (file.name, file.url))
-        tmpFileName = ultraviolet.apputils.downloadFile (file.url, file.name,)
+        tmpFileName = ultraviol.apputils.downloadFile (file.url, file.name,)
         print ("Done saving")
         return file
         # print ("Unzipping file %s " % tmpFileName)

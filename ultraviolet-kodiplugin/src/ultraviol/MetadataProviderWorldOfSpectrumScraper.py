@@ -3,10 +3,10 @@ __author__ = 'developer'
 import urllib3
 import shutil
 import xml.dom.minidom
-import ultraviolet.dataStructures
+import ultraviol.dataStructures
 import requests
 from lxml import html
-import ultraviolet.gameRunner
+import ultraviol.gameRunner
 
 class MetadataProviderWorldOfSpectrum:
     id=1
@@ -95,7 +95,7 @@ class MetadataProviderWorldOfSpectrum:
         print ("GameUrl: "+urlGameZip)
 
 
-        result = ultraviolet.dataStructures.Game()
+        result = ultraviol.dataStructures.Game()
         result.name = gameTitles[int(zipSelected)]
         result.id = ""
         result.url = urlGameZip
@@ -120,7 +120,7 @@ class MetadataProviderWorldOfSpectrum:
         import os
         import sqlite3 as lite
         try:
-            con = lite.connect(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_NAME)
+            con = lite.connect(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_NAME)
             cur = con.cursor()
 
 
@@ -181,9 +181,9 @@ class MetadataProviderWorldOfSpectrum:
 
     def indexGame (self,  gameTitle, gameUrl):
         print("indexing game: %s" % gameTitle)
-        game = ultraviolet.dataStructures.Game()
+        game = ultraviol.dataStructures.Game()
         game.name= gameTitle
-        game.gameUrl= ultraviolet.MetadataProviderWorldOfSpectrumScraper.MetadataProviderWorldOfSpectrum.urlHost+gameUrl
+        game.gameUrl= ultraviol.MetadataProviderWorldOfSpectrumScraper.MetadataProviderWorldOfSpectrum.urlHost+gameUrl
 
         gameDescUrl = gameUrl
 
@@ -212,7 +212,7 @@ class MetadataProviderWorldOfSpectrum:
         resGameList = []
         i=0
         for zip in gameTitles:
-            result = ultraviolet.dataStructures.File()
+            result = ultraviol.dataStructures.File()
             result.fileName = gameTitles[i]
             result.url = gameUrls[i]
             print ("Adding %s file: %s" % (result.fileName, result.url))
@@ -230,7 +230,7 @@ class MetadataProviderWorldOfSpectrum:
         import os
         import sqlite3 as lite
         try:
-            dbPath=os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_NAME
+            dbPath=os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_NAME
             con = lite.connect(dbPath)
 
             cur = con.cursor()
@@ -272,7 +272,7 @@ class MetadataProviderWorldOfSpectrum:
         import os
         import sqlite3 as lite
         try:
-            con = lite.connect(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_NAME)
+            con = lite.connect(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_NAME)
             cur = con.cursor()
 
             cur.execute("DELETE FROM GAMES ")
@@ -299,12 +299,12 @@ class MetadataProviderWorldOfSpectrum:
         import os
         import sqlite3 as lite
         try:
-            con = lite.connect(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_NAME)
+            con = lite.connect(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_NAME)
 
             cur = con.cursor()
             # cur.execute('SELECT SQLITE_VERSION()')
             print("saving game: %s " % game.name)
-            cur.execute("INSERT INTO GAMES ('name', 'url') VALUES ('"+ultraviolet.apputils.cleanString (game.name)+"', '"+game.gameUrl+"')")
+            cur.execute("INSERT INTO GAMES ('name', 'url') VALUES ('"+ultraviol.apputils.cleanString (game.name)+"', '"+game.gameUrl+"')")
             gameId= cur.lastrowid
             # data = cur.fetchone()
             # print ("SQLite version: %s" % data)
@@ -319,12 +319,12 @@ class MetadataProviderWorldOfSpectrum:
 
         for file in game.files:
             try:
-                con = lite.connect(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_NAME)
+                con = lite.connect(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_NAME)
 
                 cur = con.cursor()
                 # cur.execute('SELECT SQLITE_VERSION()')
                 print("saving game: %s %s" % (game.name, gameId))
-                sql = "INSERT INTO GAMEFILES ('gameId', 'name','url') VALUES ("+str(gameId)+",'"+ultraviolet.apputils.cleanString (file.fileName)+"','"+file.url+"')"
+                sql = "INSERT INTO GAMEFILES ('gameId', 'name','url') VALUES ("+str(gameId)+",'"+ultraviol.apputils.cleanString (file.fileName)+"','"+file.url+"')"
 
                 cur.execute(sql)
                 # data = cur.fetchone()
@@ -348,7 +348,7 @@ class MetadataProviderWorldOfSpectrum:
         import os
         import sqlite3 as lite
         try:
-            con = lite.connect(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_NAME)
+            con = lite.connect(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_NAME)
 
             cur = con.cursor()
             cur.execute('SELECT SQLITE_VERSION()')
@@ -365,8 +365,6 @@ class MetadataProviderWorldOfSpectrum:
 
             if con:
                 con.close()
-
-
 
 
     def getArt (self, name):

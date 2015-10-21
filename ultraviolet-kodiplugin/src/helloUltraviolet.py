@@ -3,7 +3,7 @@ __author__ = 'developer'
 
 print("Hello ultraviolet")
 
-import ultraviolet.hello.helloWorld
+import ultraviol.hello.helloWorld
 
-hello = ultraviolet.hello.helloWorld.HelloClass()
+hello = ultraviol.hello.helloWorld.HelloClass()
 hello.sayHello("Ultraviolet")

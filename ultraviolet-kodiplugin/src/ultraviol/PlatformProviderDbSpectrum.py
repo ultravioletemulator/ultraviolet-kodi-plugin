@@ -1,18 +1,14 @@
-import ultraviolet.dataStructures
-import urllib3
+import ultraviol.dataStructures
 import shutil
 import os
 
-# import MetadataProviderTgdb
-import ultraviolet.MetadataProviderDbIndexWorldOfSpectrum
+import ultraviol.MetadataProviderDbIndexWorldOfSpectrum
 
 class PlatformProviderSpectrum:
     id = 1
     name = "Zx Spectrum"
     conf=None
-    metadataProvider = ultraviolet.MetadataProviderDbIndexWorldOfSpectrum.MetadataProviderDbIndexWorldOfSpectrum()
-# def __init__(self):
-#     print("initiating platform provider"+self.name)
+    metadataProvider = ultraviol.MetadataProviderDbIndexWorldOfSpectrum.MetadataProviderDbIndexWorldOfSpectrum()
 
 
     def f(self):
@@ -24,7 +20,7 @@ class PlatformProviderSpectrum:
         # metadataProvider = MetadataProviderTgdb.MetadataProviderTgdb()
         #metadataProvider = ultraviolet.MetadataProviderWorldOfSpectrum.MetadataProviderWorldOfSpectrum()
 
-        games = self.metadataProvider.searchGame(ultraviolet.MetadataProviderDbIndexWorldOfSpectrum.MetadataProviderDbIndexWorldOfSpectrum.SPECTRUM_ID, queryString)
+        games = self.metadataProvider.searchGame(ultraviol.MetadataProviderDbIndexWorldOfSpectrum.MetadataProviderDbIndexWorldOfSpectrum.SPECTRUM_ID, queryString)
         resGameList = []
         resGameIdList = []
         i=0
@@ -32,7 +28,7 @@ class PlatformProviderSpectrum:
             gameId = game.id
             gameTitle = game.name
             print("(%s) %s (%d)" % (i, gameTitle, gameId))
-            resGame = ultraviolet.dataStructures.Game()
+            resGame = ultraviol.dataStructures.Game()
             resGame.name = gameTitle
             resGame.id = gameId
             resGame.url = game.fileUrl
@@ -41,7 +37,7 @@ class PlatformProviderSpectrum:
             resGameList.append(resGame)
             i +=1
 
-        selectedGameIdx = ultraviolet.apputils.getInput ("Please enter the id of the game you want to play.",i)
+        selectedGameIdx = ultraviol.apputils.getInput ("Please enter the id of the game you want to play.",i)
         selectedGame = resGameList[int(selectedGameIdx)]
         selectedGameId= resGameIdList[int(selectedGameIdx)]
         print ("Selected game: %d " % selectedGameId)
@@ -66,7 +62,7 @@ class PlatformProviderSpectrum:
         for file in files:
             print("(%d) %s " % (i, file.name))
             i +=1
-        selectedFileIndex = ultraviolet.apputils.getInput("Select file", i)
+        selectedFileIndex = ultraviol.apputils.getInput("Select file", i)
 
         selectedFile = files[int(selectedFileIndex)]
 
@@ -88,24 +84,24 @@ class PlatformProviderSpectrum:
         print("Model %s bios %s" % (model, bios))
 
         try:
-            shutil.rmtree(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER)
+            shutil.rmtree(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER)
         except:
             print("")
 
         if (bios.endswith(".zip")):
             nameClean=bios.replace(".zip", "")
-            ultraviolet.apputils.unzipFile(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER, ultraviolet.gameRunner.gameRunner.BIOSFOLDER +model+"/"+bios)
+            ultraviol.apputils.unzipFile(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER, ultraviol.gameRunner.gameRunner.BIOSFOLDER +model+"/"+bios)
 
         # os.system("fuse-sdl "+name+" --rom-128 bios/"+bios)
-        bioses = os.listdir(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER)
+        bioses = os.listdir(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER)
         biosStr=""
         for bios in bioses:
-            biosStr += os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER+bios+" "
+            biosStr += os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+bios+" "
 
         # command = "fuse-sdl "+name+" --rom-speccyboot "+biosStr
         #command = "fuse-sdl "+name+" --speed 100 --full-screen --graphics-filter hq3x  -j  --rom-"+model+" "+biosStr
         biosCommand= self.getBiosCommand(model, bios)
-        command = ultraviolet.gameRunner.gameRunner.configuration.fuseCommand+" "+name+ biosCommand+" --fastload  --speed 100 --full-screen --graphics-filter hq3x  -j /dev/js0 --joystick-1-output 3 "
+        command = ultraviol.gameRunner.gameRunner.configuration.fuseCommand+" "+name+ biosCommand+" --fastload  --speed 100 --full-screen --graphics-filter hq3x  -j /dev/js0 --joystick-1-output 3 "
         print(command)
         os.system(command)
         return 1
@@ -119,11 +115,11 @@ class PlatformProviderSpectrum:
         if model =="48":
             res= " --machine "+model+" --rom-"+model+" "+bios
         elif model =="128":
-            res = " --machine "+model+" --rom-"+model+"-0 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER+biosName+"-0.rom --rom-"+model+"-1 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER+biosName+"-1.rom "
+            res = " --machine "+model+" --rom-"+model+"-0 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-0.rom --rom-"+model+"-1 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-1.rom "
         elif model=="plus2":
-            res = " --machine "+model+" --rom-"+model+"-0 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER+biosName+"-0.rom --rom-"+model+"-1 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER+biosName+"-1.rom "
+            res = " --machine "+model+" --rom-"+model+"-0 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-0.rom --rom-"+model+"-1 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-1.rom "
         elif model=="plus3":
-            res = " --machine "+model+" --rom-"+model+"-0 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER+biosName+"-0.rom --rom-"+model+"-1 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER+biosName+"-1.rom  --rom-"+model+"-2 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER+biosName+"-2.rom --rom-"+model+"-3 "+os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER+biosName+"-3.rom "
+            res = " --machine "+model+" --rom-"+model+"-0 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-0.rom --rom-"+model+"-1 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-1.rom  --rom-"+model+"-2 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-2.rom --rom-"+model+"-3 "+os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER+biosName+"-3.rom "
         return res
 
     def downloadArt (self, name):
@@ -144,7 +140,7 @@ class PlatformProviderSpectrum:
 
     def listZipRoms (self, game):
         from os import listdir
-        files = listdir(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_FOLDER+game.name)
+        files = listdir(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_FOLDER+game.name)
         return files
 
 

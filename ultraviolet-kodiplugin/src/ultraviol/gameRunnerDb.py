@@ -1,66 +1,52 @@
 __author__ = 'developer'
 
-#from platform import PlatformProviderSpectrum
-#import uvplatform
-
-
-#import PlatformProviderSpectrum
-#import MetadataProviderTgdb
-#from PlatformProviderSpectrum import PlatformProviderSpectrum
-import ultraviolet.PlatformProviderSpectrum
+import ultraviol.PlatformProviderSpectrum
 
 import os
-import ultraviolet.apputils
+import ultraviol.apputils
 import shutil
-import ultraviolet.dataStructures
-# from pps import PlatformProviderSpectrum
-from json import JSONEncoder
-from json import JSONDecoder
+import ultraviol.dataStructures
 
-import ultraviolet.PlatformProviderDbSpectrum
-
-
+import ultraviol.PlatformProviderDbSpectrum
 
 class gameRunner:
 
-    BIOSFOLDER="ultraviolet/bios/"
+    BIOSFOLDER="ultraviol/bios/"
     APP_HOME="/ultraviolet/"
+    PKG_HOME="/ultraviol/"
     CONF_FOLDER="configuration/"
     CONF_FILE="configuration.pickle"
     DB_NAME="db/ultraviolet.db"
-
-
-
     configuration=None
 
 
 
     def createFolderStructure(self):
 
-        foldername= os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME
+        foldername= os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME
         if (not os.path.exists(foldername)):
             os.mkdir(foldername)
 
-        foldername= os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_FOLDER
+        foldername= os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_FOLDER
         if (not os.path.exists(foldername)):
             os.mkdir(foldername)
 
-        foldername= os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_BIOS_FOLDER
+        foldername= os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_BIOS_FOLDER
         if (not os.path.exists(foldername)):
             os.mkdir(foldername)
 
 
-        confFolder= os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.CONF_FOLDER
+        confFolder= os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER
         print ("Creating folder :"+confFolder)
         if (not os.path.exists(confFolder)):
             os.mkdir(confFolder)
 
         print ("Creating db structure")
-        if (not os.path.exists(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_FOLDER)):
-            os.mkdir(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_FOLDER)
+        if (not os.path.exists(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_FOLDER)):
+            os.mkdir(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_FOLDER)
 
-        if (not os.path.exists(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_FOLDER+self.DB_NAME)):
-            shutil.copy("."+ultraviolet.gameRunner.gameRunner.APP_HOME+self.DB_NAME, os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.DB_FOLDER)
+        if (not os.path.exists(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_FOLDER+self.DB_NAME)):
+            shutil.copy("."+ultraviol.gameRunner.gameRunner.PKG_HOME+self.DB_NAME, os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.DB_FOLDER)
 
 
 
@@ -69,7 +55,7 @@ class gameRunner:
         print("Select Zx Spectrum configuration...")
 
         conf=None
-        if (os.path.exists(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.CONF_FOLDER+ultraviolet.gameRunner.gameRunner. CONF_FILE)):
+        if (os.path.exists(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner. CONF_FILE)):
             print ("if")
             # import json
             # from pprint import pprint
@@ -77,13 +63,16 @@ class gameRunner:
             #     conf = json.load(data_file)
             # pprint(conf)
 
-            print("laoding pickle...")
+            print("loading pickle...")
             import pickle
-            with open(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.CONF_FOLDER+ultraviolet.gameRunner.gameRunner. CONF_FILE, 'rb') as f:
+            confFileName= os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner.CONF_FILE
+            print (confFileName)
+            with open(confFileName, 'rb') as f:
                 conf = pickle.load(f)
 
+
         else:
-            conf =ultraviolet.dataStructures.configuration()
+            conf =ultraviol.dataStructures.configuration()
             fuseCommand = input ("Configure your fuse program name:")
             conf.fuseCommand= fuseCommand
 
@@ -96,7 +85,7 @@ class gameRunner:
                 print("(%d) model %s..." % (i, model))
                 i +=1
 
-            modelOpt = ultraviolet.apputils.getInput("Select model:",i)
+            modelOpt = ultraviol.apputils.getInput("Select model:",i)
 
             selectedModel = models[int(modelOpt)]
 
@@ -108,7 +97,7 @@ class gameRunner:
                 print("(%d) bios %s..." % (i, bios))
                 i +=1
 
-            biosOpt = ultraviolet.apputils.getInput("Select bios:" , i)
+            biosOpt = ultraviol.apputils.getInput("Select bios:" , i)
 
             selectedBios = bioses[int(biosOpt)]
 
@@ -117,11 +106,11 @@ class gameRunner:
 
             # jsonConf= JSONEncoder.encode(conf)
             # import json
-            # with open(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.CONF_FOLDER+ultraviolet.gameRunner.gameRunner. CONF_FILE, 'w+') as outfile:
+            # with open(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner. CONF_FILE, 'w+') as outfile:
                 # json.dump(jsonConf, outfile)
                 # json.dumps(conf, default=lambda o: o.__dict__,
                 #               sort_keys=True, indent=4)
-            # with open(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.CONF_FOLDER+ultraviolet.gameRunner.gameRunner. CONF_FILE, "w+") as outfile:
+            # with open(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner. CONF_FILE, "w+") as outfile:
             #     # json.dump(conf, outfile, indent=2)
             #     json.dump(conf, cls=CustomEncoder)
 
@@ -132,14 +121,14 @@ class gameRunner:
             print("(0) True")
             print("(1) False")
 
-            downloadOpt = ultraviolet.apputils.getInput("Keeo downloaded games", 2)
+            downloadOpt = ultraviol.apputils.getInput("Keeo downloaded games", 2)
             print("opt: %s" % downloadOpt)
             download = downloadOptList[int(downloadOpt)]
             conf.download= bool(download)
 
             print("Writing pickle...")
             import pickle
-            with open(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.gameRunner.gameRunner.CONF_FOLDER+ultraviolet.gameRunner.gameRunner. CONF_FILE, 'bw+') as f:
+            with open(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.gameRunner.gameRunner.CONF_FOLDER+ultraviol.gameRunner.gameRunner. CONF_FILE, 'bw+') as f:
                 pickle.dump(conf, f)
 
         print("Model: %s bios: %s " % (conf.model, conf.bios))
@@ -150,9 +139,9 @@ class gameRunner:
 
         self.createFolderStructure()
         conf = self.configureEmulator()
-        ultraviolet.gameRunner.gameRunner.configuration= conf
+        ultraviol.gameRunner.gameRunner.configuration= conf
         #provider = platform.PlatformProviderSpectrum()
-        provider = ultraviolet.PlatformProviderDbSpectrum.PlatformProviderSpectrum()
+        provider = ultraviol.PlatformProviderDbSpectrum.PlatformProviderSpectrum()
 
         # provider = PlatformProviderSpectrum()
         # metadataProvider = ultraviolet.MetadataProviderTgdb.MetadataProviderTgdb()
@@ -174,12 +163,12 @@ class gameRunner:
 
         gameFile = provider.getRom(selectedGame)
 
-        unzipFolderName =  os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_FOLDER+gameFile.name
+        unzipFolderName =  os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_FOLDER+gameFile.name
         print("Unzipping to : %s" % (unzipFolderName))
         if (not os.path.exists(unzipFolderName)):
             os.mkdir(unzipFolderName)
 
-        ultraviolet.apputils.unzipFile(os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_FOLDER+gameFile.name,os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_FILE)
+        ultraviol.apputils.unzipFile(os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_FOLDER+gameFile.name,os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_FILE)
         romList = provider.listZipRoms(gameFile)
 
         print("****************************")
@@ -190,18 +179,18 @@ class gameRunner:
             print("(%d) file %s..." % (i, rom))
             i +=1
 
-        option = ultraviolet.apputils.getInput("Please enter the option of the rom you want to play...",i)
+        option = ultraviol.apputils.getInput("Please enter the option of the rom you want to play...",i)
         print(option)
         print("Selected file: %s" % option)
         rom = romList[int(option)]
         print("Running file: %s" % rom)
-        fullRomName = os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+ultraviolet.apputils.TMP_FOLDER+gameFile.name+"/"+rom
+        fullRomName = os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+ultraviol.apputils.TMP_FOLDER+gameFile.name+"/"+rom
 
 
         selectedModel=conf.model
         selectedBios=conf.bios
 
-        provider.playRom(ultraviolet.apputils.cleanStringOs(selectedModel) ,ultraviolet.apputils.cleanStringOs(selectedBios) ,ultraviolet.apputils.cleanStringOs(fullRomName))
+        provider.playRom(ultraviol.apputils.cleanStringOs(selectedModel) ,ultraviol.apputils.cleanStringOs(selectedBios) ,ultraviol.apputils.cleanStringOs(fullRomName))
 
         # artFile = provider.downloadArt(selectedGame)
         #

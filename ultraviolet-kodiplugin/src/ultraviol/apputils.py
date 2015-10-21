@@ -4,7 +4,7 @@ import zipfile
 import urllib3
 import os
 import shutil
-import ultraviolet
+import ultraviol
 
 
 
@@ -44,10 +44,10 @@ def unzipFile ( prefix, file):
 
 def saveFile (source, dest):
     import os.path
-    dirName = os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+"download"
+    dirName = os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+"download"
     if (not os.path.exists(dirName)):
         os.mkdir(dirName)
-        if (ultraviolet.gameRunner.conf.download):
+        if (ultraviol.gameRunner.conf.download):
             shutil.copy(source, dirName+"/"+dest)
 
 
@@ -56,7 +56,7 @@ def downloadFile ( fileUrl, saveName):
   print("Downloading file from url %s ..." % (fileUrl))
 
   c = urllib3.PoolManager()
-  tmpFileName= os.getenv("HOME")+ultraviolet.gameRunner.gameRunner.APP_HOME+TMP_FILE
+  tmpFileName= os.getenv("HOME")+ultraviol.gameRunner.gameRunner.APP_HOME+TMP_FILE
   try:
     shutil.rmtree(tmpFileName)
   except:
@@ -68,6 +68,6 @@ def downloadFile ( fileUrl, saveName):
   print("Done downloading.")
   print("Saving file...")
   name = saveName
-  ultraviolet.apputils.saveFile(tmpFileName, name)
+  ultraviol.apputils.saveFile(tmpFileName, name)
 
 
