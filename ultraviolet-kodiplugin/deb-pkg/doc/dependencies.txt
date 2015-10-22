@@ -1,0 +1,7 @@
+
+
+Torrent dependnecies:
+---------------------
+
+libtorrent
+python3-rencode
