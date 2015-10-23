@@ -1,6 +1,6 @@
 __author__ = 'developer'
 
-import ultraviol.PlatformProviderSpectrum
+import ultraviol.spectrum.PlatformProviderSpectrum as pps
 
 import os
 import ultraviol.apputils
@@ -121,7 +121,7 @@ class gameRunner:
         conf = self.configureEmulator()
         ultraviol.gameRunner.gameRunner.configuration= conf
         #provider = platform.PlatformProviderSpectrum()
-        provider = ultraviol.PlatformProviderSpectrum.PlatformProviderSpectrum()
+        provider = pps.PlatformProviderSpectrum()
 
         # provider = PlatformProviderSpectrum()
         # metadataProvider = ultraviolet.MetadataProviderTgdb.MetadataProviderTgdb()

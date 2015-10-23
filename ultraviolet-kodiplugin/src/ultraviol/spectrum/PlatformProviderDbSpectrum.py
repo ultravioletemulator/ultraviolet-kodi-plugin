@@ -2,13 +2,13 @@ import ultraviol.dataStructures
 import shutil
 import os
 
-import ultraviol.MetadataProviderDbIndexWorldOfSpectrum
+import ultraviol.spectrum.MetadataProviderDbIndexWorldOfSpectrum as mpWos
 
 class PlatformProviderSpectrum:
     id = 1
     name = "Zx Spectrum"
     conf=None
-    metadataProvider = ultraviol.MetadataProviderDbIndexWorldOfSpectrum.MetadataProviderDbIndexWorldOfSpectrum()
+    metadataProvider = mpWos.MetadataProviderDbIndexWorldOfSpectrum()
 
 
     def f(self):
@@ -20,7 +20,7 @@ class PlatformProviderSpectrum:
         # metadataProvider = MetadataProviderTgdb.MetadataProviderTgdb()
         #metadataProvider = ultraviolet.MetadataProviderWorldOfSpectrum.MetadataProviderWorldOfSpectrum()
 
-        games = self.metadataProvider.searchGame(ultraviol.MetadataProviderDbIndexWorldOfSpectrum.MetadataProviderDbIndexWorldOfSpectrum.SPECTRUM_ID, queryString)
+        games = self.metadataProvider.searchGame(mpWos.MetadataProviderDbIndexWorldOfSpectrum.SPECTRUM_ID, queryString)
         resGameList = []
         resGameIdList = []
         i=0
@@ -108,7 +108,7 @@ class PlatformProviderSpectrum:
 
     def getBiosCommand (self, model, bios):
         biosName= bios.replace(".zip","")
-        biosName= bios.replace(".rom","")
+        biosName= biosName.replace(".rom","")
         biosName= biosName.replace("-0","")
         biosName= biosName.replace("-1","")
         res=""

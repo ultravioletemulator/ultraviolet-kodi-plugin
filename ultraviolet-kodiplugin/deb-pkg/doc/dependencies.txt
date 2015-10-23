@@ -1,7 +1,30 @@
 
+sudo pip3 install pygtk
+pygtk
 
-Torrent dependnecies:
+
+Torrent dependencies:
 ---------------------
 
 libtorrent
 python3-rencode
+
+
+Mess integration
+----------------
+
+
+
+Snes dependencies
+-----------------
+zsnes edo snes9x
+
+
+Genesis dependencies:
+---------------------
+dgen
+
+Playstation
+-----------
+pcsx
+epsxe

@@ -4,13 +4,22 @@ import shutil
 import os
 import zipfile
 
-import ultraviol.MetadataProviderDbIndexWorldOfSpectrum
+# import ultraviol.spectrum.MetadataProviderDbIndexWorldOfSpectrum as mpWos
+
+# import ultraviol.spectrum.MetadataProviderDbIndexWorldOfSpectrum as mpWos
+# from ultraviol.spectrum.MetadataProviderDbIndexWorldOfSpectrum import MetadataProviderDbIndexWorldOfSpectrum as mpWos
+import ultraviol.spectrum.MetadataProviderDbIndexWorldOfSpectrum
+
 
 class PlatformProviderSpectrum:
     id = 1
     name = "Zx Spectrum"
-    conf=None
-    metadataProvider = ultraviol.MetadataProviderDbIndexWorldOfSpectrum.MetadataProviderDbIndexWorldOfSpectrum()
+    conf = None
+    metadataProvider = None
+
+
+    def __init__(self):
+        self.metadataPovider =ultraviol.spectrum.MetadataProviderDbIndexWorldOfSpectrum.MetadataProviderDbIndexWorldOfSpectrum()
 
 
     def f(self):
@@ -22,7 +31,7 @@ class PlatformProviderSpectrum:
         # metadataProvider = MetadataProviderTgdb.MetadataProviderTgdb()
         #metadataProvider = ultraviolet.MetadataProviderWorldOfSpectrum.MetadataProviderWorldOfSpectrum()
 
-        games = self.metadataProvider.searchGame(ultraviol.MetadataProviderDbIndexWorldOfSpectrum.MetadataProviderDbIndexWorldOfSpectrum.SPECTRUM_ID, queryString)
+        games = self.metadataProvider.searchGame(ultraviol.spectrum.MetadataProviderDbIndexWorldOfSpectrum.MetadataProviderDbIndexWorldOfSpectrum.SPECTRUM_ID, queryString)
         resGameList = []
         resGameIdList = []
         i=0

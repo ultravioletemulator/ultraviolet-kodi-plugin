@@ -57,9 +57,9 @@ def downloadFile ( fileUrl, saveName):
     shutil.rmtree(tmpFileName)
   except:
     print("Could not delete temp file "+tmpFileName)
-    with c.request('GET', fileUrl, preload_content=False) as resp, open(tmpFileName, 'wb') as out_file:
-      shutil.copyfileobj(resp, out_file)
-    resp.release_conn()
+  with c.request('GET', fileUrl, preload_content=False) as resp, open(tmpFileName, 'wb') as out_file:
+    shutil.copyfileobj(resp, out_file)
+  resp.release_conn()
 
   print("Done downloading.")
   print("Saving file...")

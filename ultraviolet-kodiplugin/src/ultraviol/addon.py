@@ -1,6 +1,6 @@
 import xbmcaddon
 import xbmcgui
-import PlatformProviderSpectrum
+import ultraviol.spectrum.PlatformProviderSpectrum as pps
 
 addon       = xbmcaddon.Addon()
 addonname   = addon.getAddonInfo('name')
@@ -12,4 +12,4 @@ line3   = " Using python"
 xbmcgui.Dialog().ok(addonname, line1, line2, line3)
 
 
-platformProvider = PlatformProviderSpectrum()
+platformProvider = pps.PlatformProviderSpectrum()

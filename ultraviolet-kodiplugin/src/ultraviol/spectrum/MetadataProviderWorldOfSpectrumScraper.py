@@ -183,7 +183,7 @@ class MetadataProviderWorldOfSpectrum:
         print("indexing game: %s" % gameTitle)
         game = ultraviol.dataStructures.Game()
         game.name= gameTitle
-        game.gameUrl= ultraviol.MetadataProviderWorldOfSpectrumScraper.MetadataProviderWorldOfSpectrum.urlHost+gameUrl
+        game.gameUrl= ultraviol.spectrum.MetadataProviderWorldOfSpectrumScraper.MetadataProviderWorldOfSpectrum.urlHost+gameUrl
 
         gameDescUrl = gameUrl
 

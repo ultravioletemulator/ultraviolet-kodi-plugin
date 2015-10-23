@@ -1,13 +1,13 @@
 __author__ = 'developer'
 
-import ultraviol.PlatformProviderSpectrum
+
 
 import os
 import ultraviol.apputils
 import shutil
 import ultraviol.dataStructures
 
-import ultraviol.PlatformProviderDbSpectrum
+import ultraviol.spectrum.PlatformProviderDbSpectrum as pps
 import ultraviol.configuration
 
 class gameRunner:
@@ -30,7 +30,7 @@ class gameRunner:
         conf = ultraviol.configuration.loadConfiguration()
         ultraviol.gameRunner.gameRunner.configuration= conf
         #provider = platform.PlatformProviderSpectrum()
-        provider = ultraviol.PlatformProviderDbSpectrum.PlatformProviderSpectrum()
+        provider = pps.PlatformProviderSpectrum()
 
         # provider = PlatformProviderSpectrum()
         # metadataProvider = ultraviolet.MetadataProviderTgdb.MetadataProviderTgdb()

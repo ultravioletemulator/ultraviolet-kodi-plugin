@@ -11,6 +11,7 @@ DB_FOLDER= "db/"
 BIOSFOLDER="ultraviol/bios/"
 
 DOWNLOAD_FOLDER ="download"
+TORRENT_FOLDER ="torrent"
 
 PKG_HOME="/ultraviol/"
 
