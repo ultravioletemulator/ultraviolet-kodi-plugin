@@ -79,7 +79,7 @@ class gameRunner:
         selectedModel=conf.model
         selectedBios=conf.bios
 
-        provider.playRom(ultraviol.apputils.cleanStringOs(selectedModel) ,ultraviol.apputils.cleanStringOs(selectedBios) ,ultraviol.apputils.cleanStringOs(fullRomName))
+        provider.playRom(ultraviol.apputils.cleanStringOs(selectedModel) ,ultraviol.apputils.cleanStringOs(selectedBios) ,ultraviol.apputils.cleanStringOs(fullRomName),conf)
 
         # artFile = provider.downloadArt(selectedGame)
         #

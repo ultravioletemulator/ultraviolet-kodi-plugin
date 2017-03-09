@@ -34,6 +34,23 @@ TODO List
 
 0. Meet debian policies
 
+0.5 - Build Internet Archive interface
+    archive.org
+
+        https://archive.org/details/zx_spectrum_library_games?&sort=-downloads&page=2
+        https://archive.org/help/json.php
+        https://archive.org/advancedsearch.php?q=bunny+AND+licenseurl:[http://creativecommons.org/a+TO+http://creativecommons.org/z]&fl[]=identifier,title,mediatype,collection&rows=15&output=json&callback=IAE.search_hits
+        https://archive.org/search.php?query=title%3A%28Batman%29%20AND%20collection%3A%28zx_spectrum_library_games%29%20AND%20mediatype%3A%28software%29
+
+
+        https://archive.org/metadata/FrankenberryCountChoculaTevevisionCommercial1971&callback=IAE.favorite
+
+0.6 - Dosbox  + dosgamesArchive
+
+    http://www.dosgamesarchive.com/download/indiana-jones-and-the-fate-of-atlantis/
+
+
+
 1. Use system tmp folder for temporary files
     - http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
 

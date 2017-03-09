@@ -49,9 +49,9 @@ class PlatformProviderSpectrum:
 
 
 
-    # def sRom (query):
-#     print(" searching for rom: %s" % (query))
-#     return ['1', '2', '3']
+        # def sRom (query):
+    #     print(" searching for rom: %s" % (query))
+    #     return ['1', '2', '3']
 
     def getRom(self, game):
         print ("getRom...")
@@ -79,7 +79,7 @@ class PlatformProviderSpectrum:
         return ['rom1','rom2']
 
 
-    def playRom (self, model, bios, name):
+    def playRom (self, model, bios, name, conf):
         print("Playing rom: %s" % name)
         print("Model %s bios %s" % (model, bios))
 
@@ -101,7 +101,7 @@ class PlatformProviderSpectrum:
         # command = "fuse-sdl "+name+" --rom-speccyboot "+biosStr
         #command = "fuse-sdl "+name+" --speed 100 --full-screen --graphics-filter hq3x  -j  --rom-"+model+" "+biosStr
         biosCommand= self.getBiosCommand(model, bios)
-        command = ultraviol.gameRunner.gameRunner.configuration.fuseCommand+" "+name+ biosCommand+" --fastload  --speed 100 --full-screen --graphics-filter hq3x  -j /dev/js0 --joystick-1-output 3 "
+        command = ultraviol.gameRunner.gameRunner.configuration.fuseCommand+" "+name+ biosCommand+" --fastload  --speed 100 --full-screen --graphics-filter hq3x  -j "+conf.inputPath+" --joystick-1-output 3 "
         print(command)
         os.system(command)
         return 1

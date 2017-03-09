@@ -1,22 +1,26 @@
 #!/usr/bin/python3
 __author__ = 'developer'
-# import ultraviol.configuration
-# import ultraviol.gtk.selectGameWindow
+
+
 from gi.repository import Gtk
 
-# import ultraviol.configuration as conf
+import ultraviol.gtk.selectGameWindow as selectGameWindow
+
+import ultraviol.configuration as configuration
+
 
 
 class ultravioletMainWindow(Gtk.Window):
 
-    title="Ultraviolet"
+    title = "Ultraviolet"
     conf = None
 
     def __init__(self):
-
-        # self.conf = ultraviol.configuration.loadConfiguration()
+        print("init ultravioletMainWindow")
+        self.conf = configuration.loadConfiguration()
         Gtk.Window.__init__(self, title=self.title)
 
+        self.set_icon_from_file("../../img/ultraviolet_2.jpeg")
         self.vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         self.add(self.vbox)
 
@@ -25,7 +29,6 @@ class ultravioletMainWindow(Gtk.Window):
         self.label.set_justify(Gtk.Justification.LEFT)
 
         self.vbox.pack_start(self.label, True, True, 0)
-
 
         self.entry = Gtk.Entry()
         self.vbox.pack_start(self.entry, True, True, 0)
@@ -36,6 +39,7 @@ class ultravioletMainWindow(Gtk.Window):
         self.button.connect("clicked", self.on_button_clicked)
 
         self.vbox.pack_start(self.button, True, True, 0)
+
         # self.add(self.vbox)
 
     def on_button_clicked(self, widget):
@@ -52,11 +56,10 @@ class ultravioletMainWindow(Gtk.Window):
         queryString = self.entry.get_text()
         print("Searching for %s..." % queryString)
 
-        # selectedGame= provider.searchRom(queryString)
-        selectGameWin = ultraviol.gtk.selectGameWindow.selectGameWindow()
+
+        selectGameWin = selectGameWindow.selectGameWindow()
+        selectedGame= selectGameWin.provider.searchRom(queryString)
         selectGameWin.queryText=queryString
-        selectGameWin.connect("delete-event", Gtk.main_quit)
-        selectGameWin.show_all()
 
 
 
@@ -65,6 +68,5 @@ win = ultravioletMainWindow()
 win.connect("delete-event", Gtk.main_quit)
 win.show_all()
 Gtk.main()
-
 
 

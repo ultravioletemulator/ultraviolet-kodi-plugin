@@ -24,9 +24,11 @@ class searchResult:
 
 class configuration:
     fuseCommand = "fuse-sdl"
+    inputPath="/dev/input/js0"
     model="48"
     bios="48.zip"
     download=True
+
 
 
 class reg(object):

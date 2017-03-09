@@ -1,9 +1,11 @@
 __author__ = 'developer'
 
-import ultraviol.gameRunner
-import ultraviol.apputils
 import os
 import shutil
+
+import ultraviol.gameRunner
+import ultraviol.apputils
+
 
 
 DB_NAME="ultraviolet.db"
@@ -60,6 +62,9 @@ def createFolderStructure():
 
 
 
+
+
+
 def deleteConfiguration():
     print ("Deleting configuration...")
     confFileName =ultraviol.apputils.getConfFolder()+ultraviol.configuration.CONF_FOLDER+ultraviol.configuration.CONF_FILE
@@ -81,10 +86,13 @@ def configureEmulator ():
             with open(confFileName, 'rb') as f:
                 conf = pickle.load(f)
 
-
         else:
             conf =ultraviol.dataStructures.configuration()
-            fuseCommand = input ("Configure your fuse program name:")
+            fuseCommand = ultraviol.apputils.getInputKeyb("Configure your fuse program name:")
+
+            # fuseCommand= "fuse-sdl"
+
+
             conf.fuseCommand= fuseCommand
 
             print("Select model.")
@@ -127,6 +135,17 @@ def configureEmulator ():
             download = downloadOptList[int(downloadOpt)]
             conf.download= bool(download)
 
+
+            print ("Configuring input...")
+            pathInput="/dev/input/js*"
+            import glob
+            inputs = glob.glob(pathInput)
+            i=0
+            for input in inputs:
+                print("(%d) %s " %(i, input))
+                i +=1
+            selectedInput= ultraviol.apputils.getInput("Select input:", i)
+            conf.inputPath=selectedInput
             print("Writing pickle...")
             import pickle
             with open(ultraviol.apputils.getConfFolder()+ultraviol.configuration.CONF_FILE, 'bw+') as f:
@@ -139,6 +158,7 @@ def configureEmulator ():
 def loadConfiguration():
     print("loading configuration...")
     import pickle
-    with open(ultraviol.apputils.getConfFolder()+ultraviol.configuration.CONF_FILE, 'rb') as f:
+    fileName = ultraviol.apputils.getConfFolder()+ultraviol.configuration.CONF_FILE
+    with open(fileName, 'rb') as f:
         conf= pickle.load(f)
         return conf

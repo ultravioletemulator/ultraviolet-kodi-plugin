@@ -2,26 +2,31 @@ __author__ = 'developer'
 
 from gi.repository import Gtk
 
+
+# from ultraviol.spectrum.PlatformProviderDbSpectrum import PlatformProviderSpectrum
+from ultraviol.spectrum import PlatformProviderDbSpectrum as PPS
+
 # import ultraviol.spectrum.PlatformProviderDbSpectrum as pps
 
 class selectGameWindow(Gtk.Window):
 
     title="Ultraviolet - Game selection"
     queryText="Batman"
-
+    platformProvider= None
     # conf = conf.loadConfiguration()
 
     def __init__(self):
         print ("init selectGameWindow")
+        self.platformProvider = PPS.PlatformProviderSpectrum()
         self.performSearch()
         self.drawWindow()
 
-
+    def on_button_clicked (self, widget):
+        print("on_button_clicked")
 
     def performSearch(self):
         print("Searching for %s" % self.queryText)
-        ultraviol.spectrum.PlatformProviderDbSpectrum.searchRom(self.queryText)
-
+        self.platformProvider.searchRom(self.queryText)
 
     def drawWindow(self):
 

@@ -7,6 +7,8 @@ import shutil
 import ultraviol
 
 
+import ultraviol.configuration
+
 
 def cleanString( str):
     if not str is None:
@@ -24,7 +26,8 @@ def getInput(msg, length):
     return res
 
 
-
+def getInputKeyb(msg):
+    return input(msg)
 
 def unzipFile ( prefix, file):
    print ("Unzipping file %s to %s "%(prefix,file))
